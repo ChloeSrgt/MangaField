@@ -1,0 +1,36 @@
+const express = require('express');
+const Sequelize = require('sequelize');
+const cors = require('cors'); 
+const config = require('./config/config.json').development;
+const userRoutes = require('./routes/userRoutes');
+
+const app = express();
+const PORT = process.env.PORT || 4000;
+
+app.use(cors()); 
+
+app.use(express.json());
+
+const sequelize = new Sequelize(config.database, config.username, config.password, {
+  host: config.host,
+  dialect: config.dialect,
+  operatorsAliases: config.operatorsAliases
+});
+
+sequelize.authenticate()
+  .then(() => {
+    console.log('Connection to database established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
+
+app.use('/users', userRoutes);
+
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on PORT ${PORT}`);
+});
