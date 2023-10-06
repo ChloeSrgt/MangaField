@@ -7,7 +7,7 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+            
         try {
             const response = await fetch('http://localhost:4000/users/login', {
                 method: 'POST',
@@ -16,18 +16,18 @@ function Login() {
                 },
                 body: JSON.stringify({ email, password })
             });
-
+    
             const data = await response.json();
-
+    
             if (response.status !== 200) {
-                throw new Error(data.message);
+                throw new Error(data);
             }
-            localStorage.setItem('token', data.token);
+            localStorage.setItem('token', data);
         } catch (error) {
             setError(error.message);
         }
-    };
-
+    };    
+    
     return (
         <div>
             <h2>Connexion</h2>
