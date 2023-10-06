@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 function verifyToken(req, res, next) {
     const token = req.header('auth-token');
     if (!token) return res.status(401).send('Access Denied');
@@ -12,5 +14,7 @@ function verifyToken(req, res, next) {
 }
 
 
-router.get('/protected-route', verifyToken, (req, res) => {
-});
+router.get('/some-protected-route', verifyToken, (req, res) => {
+    router.use(verifyToken);
+  });
+  
