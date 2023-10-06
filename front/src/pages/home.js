@@ -1,7 +1,8 @@
 import { makeStyles } from '@mui/styles';
 import SearchBar from '../components/searchBar';
+import React from 'react';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     container: {
         display: 'flex',
         flexDirection: 'column',
