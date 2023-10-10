@@ -11,10 +11,6 @@ const verifyToken = (req, res, next) => {
     } catch (err) {
         res.status(400).send('Invalid Token');
     }
-}
+};
 
-
-router.get('/some-protected-route', verifyToken, (req, res) => {
-    router.use(verifyToken);
-  });
-  
+module.exports = verifyToken;

@@ -5,7 +5,6 @@ module.exports = {
       database: "mangadb",
       host: "127.0.0.1",
       dialect: "postgres",
-      operatorsAliases: false
     },
   test: {
     username: "chloe",
@@ -13,7 +12,6 @@ module.exports = {
     database: "mangadb",
     host: "127.0.0.1",
     dialect: "postgres",
-    operatorsAliases: false
   },
   production: {
     username: "chloe",
@@ -21,6 +19,5 @@ module.exports = {
     database: "mangadb",
     host: "127.0.0.1",
     dialect: "postgres",
-    operatorsAliases: false
   },
 }
