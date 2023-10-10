@@ -27,11 +27,7 @@ sequelize.authenticate()
     console.error('Unable to connect to the database:', err);
   });
 
-app.use('/users', userRoutes);
-
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+app.use('/', userRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on PORT ${PORT}`);
