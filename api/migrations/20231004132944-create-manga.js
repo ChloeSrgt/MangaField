@@ -10,10 +10,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
-        type: Sequelize.STRING
-      },
+        type: Sequelize.STRING(1000)
+      },      
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(1000)
       },
       releaseDate: {
         type: Sequelize.DATE
@@ -22,8 +22,9 @@ module.exports = {
         type: Sequelize.STRING
       },
       image: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(1000)
       },
+      
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
