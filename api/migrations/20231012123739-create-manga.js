@@ -15,8 +15,8 @@ module.exports = {
       description: {
         type: Sequelize.STRING(1000)
       },
-      releaseDate: {
-        type: Sequelize.DATE
+      theme: {
+        type: Sequelize.STRING
       },
       author: {
         type: Sequelize.STRING
@@ -24,7 +24,6 @@ module.exports = {
       image: {
         type: Sequelize.STRING(1000)
       },
-      
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
