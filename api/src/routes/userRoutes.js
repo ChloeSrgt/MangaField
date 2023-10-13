@@ -4,8 +4,8 @@ const { register, login } = require("../controllers/userController");
 const authMiddleware = require("../middlewares/authMiddleware");
 const UserLibrary = require("../models/userLibrary");
 const User = require("../models/user");
-const db = require('../models'); 
-const Manga = db.Manga;
+const db = require("../models");
+const { Manga, MangaVolume } = require("../models");
 
 router.post("/register", register);
 router.post("/login", login);
@@ -14,14 +14,7 @@ router.get("/manga", async (req, res) => {
   try {
     console.log(Manga);
     const mangas = await Manga.findAll({
-      attributes: [
-        "id",
-        "title",
-        "description",
-        "releaseDate",
-        "author",
-        "image",
-      ],
+      attributes: ["id", "title", "theme", "description", "author", "image"],
     });
     res.json(mangas);
   } catch (err) {
@@ -29,6 +22,91 @@ router.get("/manga", async (req, res) => {
     res
       .status(500)
       .send("Erreur lors de la récupération des mangas: " + err.message);
+  }
+});
+
+router.get("/manga/:mangaId", async (req, res) => {
+  try {
+    const { mangaId } = req.params;
+    const manga = await Manga.findByPk(mangaId, {
+      attributes: ["id", "title", "description", "author", "image"],
+    });
+
+    if (!manga) {
+      return res.status(404).send("Manga non trouvé.");
+    }
+
+    res.json(manga);
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .send(
+        "Erreur lors de la récupération des détails du manga: " + err.message
+      );
+  }
+});
+
+router.get("/mangaVolume", async (req, res) => {
+  try {
+    const mangaVolumes = await MangaVolume.findAll({
+      attributes: [
+        "id",
+        "title",
+        "description",
+        "releaseDate",
+        "image",
+        "mangaId",
+      ],
+      include: {
+        model: Manga,
+        attributes: ["title", "author"],
+      },
+    });
+
+    res.json(mangaVolumes);
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .send(
+        "Erreur lors de la récupération des volumes et des mangas: " +
+          err.message
+      );
+  }
+});
+
+router.get("/mangaVolume/:mangaVolumeId", async (req, res) => {
+  try {
+    const { mangaVolumeId } = req.params;
+    const mangaVolume = await MangaVolume.findByPk(mangaVolumeId, {
+      attributes: [
+        "id",
+        "title",
+        "description",
+        "releaseDate",
+        "image",
+        "mangaId",
+      ],
+      include: {
+        model: Manga,
+        attributes: ["title", "author", "theme"],
+      },
+    });
+
+    if (!mangaVolume) {
+      return res.status(404).send("Volume de manga non trouvé.");
+    }
+
+    res.json(mangaVolume);
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .send(
+        "Erreur lors de la récupération des détails du volume de manga: " +
+          err.message
+      );
   }
 });
 

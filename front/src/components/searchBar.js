@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     width: "auto",
     margin: "20px",
+    transition: "transform 0.3s",
+    "&:hover": {
+      transform: "scale(1.05)",
+    },
   },
   searchWrapper: {
     flex: 1,
@@ -62,6 +66,10 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     margin: "10px",
+    transition: "transform 0.3s",
+    "&:hover": {
+      transform: "scale(1.05)",
+    },
   },
 }));
 
@@ -96,10 +104,18 @@ const SearchBar = () => {
   const handleUserLibrary = () => {
     navigate("/userLibrary");
   };
+  const handleHome = () => {
+    navigate("/home");
+  };
 
   return (
     <header className={classes.header}>
-      <img src={logo} alt="Logo" className={classes.logo} />
+      <img
+        src={logo}
+        alt="Logo"
+        className={classes.logo}
+        onClick={handleHome}
+      />
       <div className={classes.searchWrapper}>
         <div className={classes.searchContainer}>
           <div className={classes.search}>

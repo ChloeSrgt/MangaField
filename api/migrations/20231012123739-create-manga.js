@@ -10,19 +10,19 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
-        type: Sequelize.STRING
-      },
+        type: Sequelize.STRING(1000)
+      },      
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(1000)
       },
-      releaseDate: {
-        type: Sequelize.DATE
+      theme: {
+        type: Sequelize.STRING
       },
       author: {
         type: Sequelize.STRING
       },
       image: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(1000)
       },
       createdAt: {
         allowNull: false,

@@ -1,6 +1,7 @@
 import { makeStyles } from "@mui/styles";
 import SearchBar from "../components/searchBar";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const useStyles = makeStyles(() => ({
@@ -11,43 +12,70 @@ const useStyles = makeStyles(() => ({
   },
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+    gridTemplateColumns: "repeat(5, minmax(100px, 1fr))",
     gap: "20px",
     width: "80%",
-    marginTop: "20px",
+    marginTop: "10px",
   },
-  mangaCard: {
+  mangaVolumeCard: {
+    position: "relative",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    justifyContent: "flex-start",
     border: "1px solid #ddd",
     padding: "10px",
     transition: "transform 0.3s",
+    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+    width: "240px",
+    margin: "0 auto",
     "&:hover": {
       transform: "scale(1.05)",
     },
   },
-  mangaImage: {
-    width: "100%",
-    height: "auto",
+  releaseDate: {
+    position: "absolute",
+    top: "4px",
+    left: "15px",
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    padding: "4px 4px",
+    borderRadius: "4px",
+    fontSize: "11px",
+    zIndex: 1,
+  },
+
+  mangaVolumeImage: {
     borderRadius: "8px",
     objectFit: "cover",
   },
+  mangaVolumeTitle: {
+    fontSize: "15px",
+    display: "inline-block",
+    marginRight: "5px",
+    marginBottom: "5px",
+  },
   mangaTitle: {
     fontSize: "15px",
-    alignItems: "center",
+    display: "inline-block",
+    marginBottom: "5px",
+    color: "grey",
+  },
+  mangaAuthor: {
+    fontSize: "13px",
+    color: "#777",
+    textAlign: "left",
   },
 }));
 
 const Home = () => {
   const classes = useStyles();
-  const [mangas, setMangas] = useState([]);
+  const [mangasVolume, setMangasVolume] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/manga")
+      .get("http://localhost:4000/mangaVolume")
       .then((response) => {
-        setMangas(response.data);
+        setMangasVolume(response.data);
       })
       .catch((error) => {
         console.error("Erreur lors de la récupération des mangas: ", error);
@@ -59,21 +87,27 @@ const Home = () => {
       <SearchBar />
       <h1>Catalogue Manga</h1>
       <div className={classes.grid}>
-        {mangas.map((manga, index) => (
-          <div key={manga.id} className={classes.mangaCard}>
+        {mangasVolume.map((mangaVolume, index) => (
+          <div
+            key={mangaVolume.id}
+            className={classes.mangaVolumeCard}
+            onClick={() => navigate(`/manga/${mangaVolume.id}`)}
+          >
             <img
-              src={manga.image}
-              alt={manga.title}
-              className={classes.mangaImage}
+              src={mangaVolume.image}
+              alt={mangaVolume.title}
+              className={classes.mangaVolumeImage}
             />
-            <h2 className={classes.mangaTitle}>{manga.title}</h2>
-            <p>{manga.description}</p>
-            <p>
-              <strong>Auteur :</strong> {manga.author}
-            </p>
-            <p>
-              <strong>Date de sortie :</strong>{" "}
-              {new Date(manga.releaseDate).toLocaleDateString()}
+            <div>
+              <p className={classes.mangaVolumeTitle}>
+                {mangaVolume.Manga.title}
+              </p>
+              <p className={classes.mangaTitle}>- {mangaVolume.title}</p>
+            </div>
+            <p className={classes.mangaAuthor}>{mangaVolume.Manga.author}</p>
+            <p className={classes.releaseDate}>
+              <strong>Sortie le</strong>{" "}
+              {new Date(mangaVolume.releaseDate).toLocaleDateString()}
             </p>
           </div>
         ))}

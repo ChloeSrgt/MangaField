@@ -6,6 +6,7 @@ import Login from "./pages/login";
 import MyProfil from "./pages/myProfil";
 import Register from "./pages/register";
 import UserLibrary from "./pages/userLibrary";
+import MangaDetails from "./pages/mangaDetails";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/myProfil" element={<MyProfil /> } />
         <Route path="/register" element={<Register />} />
         <Route path="/userLibrary" element={<UserLibrary />} />
+        <Route path="/manga/:id" element={<MangaDetails />} />
       </Routes>
     </Router>
   );
