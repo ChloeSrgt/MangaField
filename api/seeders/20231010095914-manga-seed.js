@@ -94,6 +94,39 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          id: 9,
+          title: "Mashle",
+          image: "https://m.media-amazon.com/images/I/81V5MMQLKHL._SL1500_.jpg",
+          description:
+            "Élevé au fin fond de la forêt, Mash Burnedead partage ses journées entre séances de musculation et dégustation de choux à la crème. Mais un jour, un agent de police découvre son secret. Il est né sans pouvoirs magiques, ce qui est puni de mort ! Pour survivre, il a devoir postuler à Easton, une prestigieuse académie de magie et en devenir le meilleur élève.",
+          author: "Hajime Kômoto",
+          theme: "Arts martiaux, combats, magie",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          id: 10,
+          title: "Killing stalking",
+          image: "https://assets.bubblebd.com/img/y6tz3emcuc/je9dvdmy3j.jpg",
+          description:
+            "Yoon bum, un jeune homme frêle et effacé, tombe sous le charme de Sangwoo, un camarade d’école très populaire. Quelques années plus tard, après avoir fait leur service militaire dans la même promo, Yoon bum n’arrive plus à restreindre ses sentiments et s’introduit chez lui dans l’espoir de rasséréner son amour obsessionnel. Seulement, il ne se doutait pas que Sangwoo cachait un tel secret. Secret qu’il aurait mieux fait de ne jamais découvrir...",
+          author: "Taifu Comics",
+          theme: "Drame, Horreur, Horreur psychologique",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          id: 11,
+          title: "Magic Knight Rayearth",
+          image: "https://assets.bubblebd.com/img/2lutqq09ab/xhjp66mbvo.jpg",
+          description:
+            "Dans un univers imaginaire, trois collégiennes, Hikaru, Umi et Fû sont confrontées aux forces du mal qui ont envahi un monde parallèle. Arrachées à leur vie quotidienne de Tokyo, elles deviennent des héroïnes combattant pour le défendre, des Magic Knight. Ensemble, les trois amies vont apprendre les valeurs de l'amitié et du courage. Un scénario fantastique et drôle doublé d'un style graphique particulier caractérise ce grand succès d'heroic-fantasy teinté d'orientalisme.",
+          author: "Clamp",
+          theme: "Aventure, Fantastique",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );

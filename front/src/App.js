@@ -7,6 +7,7 @@ import MyProfil from "./pages/myProfil";
 import Register from "./pages/register";
 import UserLibrary from "./pages/userLibrary";
 import MangaDetails from "./pages/mangaDetails";
+import AllMangas from "./pages/allMangas";
 
 const App = () => {
   return (
@@ -18,7 +19,8 @@ const App = () => {
         <Route path="/myProfil" element={<MyProfil /> } />
         <Route path="/register" element={<Register />} />
         <Route path="/userLibrary" element={<UserLibrary />} />
-        <Route path="/manga/:id" element={<MangaDetails />} />
+        <Route path="/mangaVolume/:id" element={<MangaDetails />} />
+        <Route path="/manga/:mangaId" component={AllMangas} />
       </Routes>
     </Router>
   );

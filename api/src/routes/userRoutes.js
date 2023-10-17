@@ -47,6 +47,24 @@ router.get("/manga/:mangaId", async (req, res) => {
   }
 });
 
+router.get("/mangaVolume/:mangaId/volumes", async (req, res) => {
+  try {
+    const { mangaId } = req.params;
+    const volumes = await MangaVolume.findAll({
+      where: { mangaId },
+      include: {
+        model: Manga,
+        attributes: ["title", "author", "theme"],
+      },
+    });
+    res.json(volumes);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur lors de la récupération des volumes.");
+  }
+});
+
+
 router.get("/mangaVolume", async (req, res) => {
   try {
     const mangaVolumes = await MangaVolume.findAll({

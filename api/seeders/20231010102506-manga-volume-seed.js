@@ -497,11 +497,191 @@ module.exports = {
         },
         {
           mangaId: 7,
+          title: "tome 1",
+          image: "https://assets.bubblebd.com/img/5txrohx62h/q93ytf3p5f.jpg",
+          description:
+            "Le mensonge est une arme pour se défendre dans le monde du show-biz. Le docteur Gorô est obstétricien dans un hôpital de campagne. Il est loin du monde de paillettes dans lequel évolue Ai Hoshino, une chanteuse au succès grandissant dont il est un fan absolu. Ces deux-là vont peut-être se rencontrer dans des circonstances peu favorables, mais cet évènement changera leur vie à jamais !",
+          releaseDate: new Date("2022-01-13"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 7,
+          title: "tome 2",
+          image: "https://assets.bubblebd.com/img/cjlib9azrx/pkfp044ea5.jpg",
+          description:
+            "Dans le monde du spectacle, le mensonge est une arme !Le docteur Gorô est obstétricien dans un hôpital de campagne. Il est loin du monde de paillettes dans lequel évolue Aï Hoshino, une chanteuse au succès grandissant dont il est un fan absolu. Ces deux-là vont se rencontrer dans des circonstances exceptionnelles, ce qui changera leur vie à jamais !",
+          releaseDate: new Date("2021-01-13"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 7,
+          title: "tome 3",
+          image: "https://assets.bubblebd.com/img/e40w5u7qzw/7x11uqwfyr.jpg",
+          description:
+            "Les jumeaux poursuivent leurs études dans un lycée artistique. Entourée de jeunes artistes ayant tous déjà un pied dans le milieu, Ruby est impatiente d’enfin démarrer sa carrière de chanteuse de girls band. Aqua, lui, rencontre un producteur sur le tournage d’une série. Ce dernier lui propose de participer à une émission de téléréalité de rencontre. Il en viendra à se demander ce qu’est la « réalité » selon le monde du spectacle...",
+          releaseDate: new Date("2022-05-12"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 7,
+          title: "tome 4",
+          image: "https://assets.bubblebd.com/img/pgoq2ov2pl/dt79yr7wbl.jpg",
+          description:
+            "Dans le monde du spectacle, le mensonge est une arme !Le docteur Gorô est obstétricien dans un hôpital de campagne. Il est loin du monde de paillettes dans lequel évolue Aï Hoshino, une chanteuse au succès grandissant dont il est un fan absolu. Ces deux-là vont se rencontrer dans des circonstances exceptionnelles, ce qui changera leur vie à jamais !",
+          releaseDate: new Date("2022-09-22"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 7,
+          title: "tome 5",
+          image: "https://assets.bubblebd.com/img/mn9ceafbik/g6qgggy0th.jpg",
+          description:
+            "Dans le monde du spectacle, le mensonge est une arme !Le docteur Gorô est obstétricien dans un hôpital de campagne. Il est loin du monde de paillettes dans lequel évolue Aï Hoshino, une chanteuse au succès grandissant dont il est un fan absolu. Ces deux-là vont se rencontrer dans des circonstances exceptionnelles, ce qui changera leur vie à jamais !",
+          releaseDate: new Date("2022-11-10"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 7,
+          title: "tome 6",
+          image: "https://assets.bubblebd.com/img/cfm4dhp9tu/y4wo7bidb3.jpg",
+          description:
+            "Dans le monde du spectacle, le mensonge est une arme !Le docteur Gorô est obstétricien dans un hôpital de campagne. Il est loin du monde de paillettes dans lequel évolue Aï Hoshino, une chanteuse au succès grandissant dont il est un fan absolu. Ces deux-là vont se rencontrer dans des circonstances exceptionnelles, ce qui changera leur vie à jamais !",
+          releaseDate: new Date("2023-02-09"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 7,
+          title: "tome 7",
+          image: "https://assets.bubblebd.com/img/n7zp7ls4bh/3y9db7397t.jpg",
+          description:
+            "Dans le monde du spectacle, le mensonge est une arme !Le docteur Gorô est obstétricien dans un hôpital de campagne. Il est loin du monde de paillettes dans lequel évolue Aï Hoshino, une chanteuse au succès grandissant dont il est un fan absolu. Ces deux-là vont se rencontrer dans des circonstances exceptionnelles, ce qui changera leur vie à jamais !",
+          releaseDate: new Date("2023-05-11"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 7,
           title: "tome 8",
           image: "https://assets.bubblebd.com/img/llpbhr7ppv/bmzeeie9ef.jpg",
           description:
             "Dans le monde du spectacle, le mensonge est une arme !Le docteur Gorô est obstétricien dans un hôpital de campagne. Il est loin du monde de paillettes dans lequel évolue Aï Hoshino, une chanteuse au succès grandissant dont il est un fan absolu. Ces deux-là vont se rencontrer dans des circonstances exceptionnelles, ce qui changera leur vie à jamais !",
-          releaseDate: new Date("2023-08-17"),
+          releaseDate: new Date("2023-08-07"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 7,
+          title: "tome 9",
+          image: "https://assets.bubblebd.com/img/5yg6dyi6fs/d2cdcvzxlp.jpg",
+          description:
+            "Dans le monde du spectacle, le mensonge est une arme !Le docteur Gorô est obstétricien dans un hôpital de campagne. Il est loin du monde de paillettes dans lequel évolue Aï Hoshino, une chanteuse au succès grandissant dont il est un fan absolu. Ces deux-là vont se rencontrer dans des circonstances exceptionnelles, ce qui changera leur vie à jamais !",
+          releaseDate: new Date("2023-11-09"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 8,
+          title: "tome 1",
+          image: "https://assets.bubblebd.com/img/w3wcpblgzc/l6pn426c7o.jpg",
+          description:
+            "Au pied de la ville d’Orse s’étend l’abysse, une faille gigantesque à la profondeur inconnue habitée par d’étranges créatures et emplie d’antiques reliques. Depuis des années, ce gouffre attire de nombreux aventuriers séduits par l’aura de mystère qui l’entoure. On les appelle « les caverniers ». C’est ici que vit Rico, une jeune orpheline obsédée par l’Abysse et désirant marcher dans les traces de sa mère. Un jour, lors de ses prospections, elle découvre le corps inanimé d’un jeune garçon. Elle n’imagine alors pas à quel point cette découverte va changer sa vie et accélérer son destin.",
+          releaseDate: new Date("2018-05-18"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 8,
+          title: "tome 2",
+          image: "https://assets.bubblebd.com/img/iczpx0cg1a/9rrpdvb4k1.jpg",
+          description:
+            "Au pied de la ville d'Orse s'étend l'Abysse, une faille gigantesque à la profondeur inconnue habitée par d'étranges créatures et emplie d'antiques reliques. Depuis des années, ce gouffre attire de nombreux aventuriers séduits par l'aura de mystère qui l'entoure et qui se font appeler les caverniers . C'est ici que vit Rico, une jeune orpheline obsédée par l'Abysse et désirant marcher dans les traces de sa mère qui y a disparu.",
+          releaseDate: new Date("2018-07-06"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 8,
+          title: "tome 3",
+          image: "https://assets.bubblebd.com/img/1hs53uddzx/h0ou7xm70o.jpg",
+          description:
+            "Suite à la destruction du village d'Ilblu, Rico, Legu et Nanachi poursuivent leur aventure toujours plus loin dans les profondeurs de l'abysse.",
+          releaseDate: new Date("2019-09-21"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 8,
+          title: "tome 4",
+          image: "https://assets.bubblebd.com/img/hhbfxlvzzh/jrjns8wusa.jpg",
+          description:
+            "Suite à la destruction du village d'Ilblu, Rico, Legu et Nanachi poursuivent leur aventure toujours plus loin dans les profondeurs de l'abysse.",
+          releaseDate: new Date("2019-01-18"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 8,
+          title: "tome 5",
+          image: "https://assets.bubblebd.com/img/wfjpt2ztc4/yoco0comjh.jpg",
+          description:
+            "Suite à la destruction du village d'Ilblu, Rico, Legu et Nanachi poursuivent leur aventure toujours plus loin dans les profondeurs de l'abysse.",
+          releaseDate: new Date("2019-04-12"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 8,
+          title: "tome 6",
+          image: "https://assets.bubblebd.com/img/iccmlrnqfi/9pkyzyzx0p.jpg",
+          description:
+            "Suite à la destruction du village d'Ilblu, Rico, Legu et Nanachi poursuivent leur aventure toujours plus loin dans les profondeurs de l'abysse.",
+          releaseDate: new Date("2019-07-05"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 8,
+          title: "tome 7",
+          image: "https://assets.bubblebd.com/img/zpcuvsopkg/ppus5jyd4k.jpg",
+          description:
+            "En suivant la piste de Prushka, Rico, Légu et Nanachi sont parvenus à Ilbru, le village des ombres. Il s’y échange des choses et des non-choses, et si on est prêt à y mettre le prix, tous les voeux peuvent y être exaucés. Un ragoût suspicieux a amené nos trois amis à se séparer, et lorsque Rico sort finalement de l’auberge pour retrouver Légu et Nanachi, ce dernier est déjà dans une situation qui semble irréversible...",
+          releaseDate: new Date("2019-10-25"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 8,
+          title: "tome 8",
+          image: "https://assets.bubblebd.com/img/ov1vluhht1/0io1n55nux.jpg",
+          description:
+            "Suite à la destruction du village d'Ilblu, Rico, Legu et Nanachi poursuivent leur aventure toujours plus loin dans les profondeurs de l'abysse.",
+          releaseDate: new Date("2020-02-28"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 8,
+          title: "tome 9",
+          image: "https://assets.bubblebd.com/img/7mjpe9kcmb/anuhojqrc7.jpg",
+          description:
+            "Suite à la destruction du village d'Ilblu, Rico, Legu et Nanachi poursuivent leur aventure toujours plus loin dans les profondeurs de l'abysse.",
+          releaseDate: new Date("2021-02-26"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 8,
+          title: "tome 10",
+          image: "https://assets.bubblebd.com/img/4kbgv0cvxe/c8ib4fajpm.jpg",
+          description:
+            "Suite à la destruction du village d'Ilblu, Rico, Legu et Nanachi poursuivent leur aventure toujours plus loin dans les profondeurs de l'abysse.",
+          releaseDate: new Date("2022-10-28"),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -512,6 +692,136 @@ module.exports = {
           description:
             "Suite à la destruction du village d'Ilblu, Rico, Legu et Nanachi poursuivent leur aventure toujours plus loin dans les profondeurs de l'abysse.",
           releaseDate: new Date("2023-09-29"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 9,
+          title: "tome 17",
+          image: "https://assets.bubblebd.com/img/xuujymw4kn/1anzdkxfwy.jpg",
+          description:
+            "Le combat contre Innocent Zero bat son pleins, malheureusement, ils ce trouvent tous en difficultés. Que va t'il ce passer par la suite, et pourront ils vaincre de dernier ennemis?",
+          releaseDate: new Date("2023-11-08"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 10,
+          title: "tome 1",
+          image: "https://assets.bubblebd.com/img/y6tz3emcuc/je9dvdmy3j.jpg",
+          description:
+            "Yoon bum, un jeune homme frêle et effacé, tombe sous le charme de Sangwoo, un camarade d’école très populaire. Quelques années plus tard, après avoir fait leur service militaire dans la même promo, Yoon bum n’arrive plus à restreindre ses sentiments et s’introduit chez lui dans l’espoir de rasséréner son amour obsessionnel. Seulement, il ne se doutait pas que Sangwoo cachait un tel secret. Secret qu’il aurait mieux fait de ne jamais découvrir...",
+          releaseDate: new Date("2020-11-27"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 10,
+          title: "tome 2",
+          image: "https://assets.bubblebd.com/img/lsmtlpfkwj/5k2r1hs5fd.jpg",
+          description:
+            "Yoon bum, un jeune homme frêle et effacé, tombe sous le charme de Sangwoo, un camarade d’école très populaire. Quelques années plus tard, après avoir fait leur service militaire dans la même promo, Yoon bum n’arrive plus à restreindre ses sentiments et s’introduit chez lui dans l’espoir de rasséréner son amour obsessionnel. Seulement, il ne se doutait pas que Sangwoo cachait un tel secret. Secret qu’il aurait mieux fait de ne jamais découvrir...",
+          releaseDate: new Date("2021-04-16"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 10,
+          title: "tome 3",
+          image: "https://assets.bubblebd.com/img/uafjazrsax/2fxh6ul322.jpg",
+          description:
+            "Yoon bum, un jeune homme frêle et effacé, tombe sous le charme de Sangwoo, un camarade d’école très populaire. Quelques années plus tard, après avoir fait leur service militaire dans la même promo, Yoon bum n’arrive plus à restreindre ses sentiments et s’introduit chez lui dans l’espoir de rasséréner son amour obsessionnel. Seulement, il ne se doutait pas que Sangwoo cachait un tel secret. Secret qu’il aurait mieux fait de ne jamais découvrir...",
+          releaseDate: new Date("2021-10-15"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 10,
+          title: "tome 4",
+          image: "https://assets.bubblebd.com/img/uclvd5ftw0/3gbh2kglo5.jpg",
+          description:
+            "Yoon bum, un jeune homme frêle et effacé, tombe sous le charme de Sangwoo, un camarade d’école très populaire. Quelques années plus tard, après avoir fait leur service militaire dans la même promo, Yoon bum n’arrive plus à restreindre ses sentiments et s’introduit chez lui dans l’espoir de rasséréner son amour obsessionnel. Seulement, il ne se doutait pas que Sangwoo cachait un tel secret. Secret qu’il aurait mieux fait de ne jamais découvrir...",
+          releaseDate: new Date("2022-05-15"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 10,
+          title: "tome 5",
+          image: "https://assets.bubblebd.com/img/ye6g497kft/6p3qm4mzn6.jpg",
+          description:
+            "Yoon bum, un jeune homme frêle et effacé, tombe sous le charme de Sangwoo, un camarade d’école très populaire. Quelques années plus tard, après avoir fait leur service militaire dans la même promo, Yoon bum n’arrive plus à restreindre ses sentiments et s’introduit chez lui dans l’espoir de rasséréner son amour obsessionnel. Seulement, il ne se doutait pas que Sangwoo cachait un tel secret. Secret qu’il aurait mieux fait de ne jamais découvrir...",
+          releaseDate: new Date("2023-06-09"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 10,
+          title: "tome 6",
+          image: "https://assets.bubblebd.com/img/z6b9f0m2vr/pbvvzi6uag.jpg",
+          description:
+            "Yoon bum, un jeune homme frêle et effacé, tombe sous le charme de Sangwoo, un camarade d’école très populaire. Quelques années plus tard, après avoir fait leur service militaire dans la même promo, Yoon bum n’arrive plus à restreindre ses sentiments et s’introduit chez lui dans l’espoir de rasséréner son amour obsessionnel. Seulement, il ne se doutait pas que Sangwoo cachait un tel secret. Secret qu’il aurait mieux fait de ne jamais découvrir...",
+          releaseDate: new Date("2023-09-29"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 11,
+          title: "tome 1",
+          image: "https://assets.bubblebd.com/img/2lutqq09ab/xhjp66mbvo.jpg",
+          description:
+            "Dans un univers imaginaire, trois collégiennes, Hikaru, Umi et Fû sont confrontées aux forces du mal qui ont envahi un monde parallèle. Arrachées à leur vie quotidienne de Tokyo, elles deviennent des héroïnes combattant pour le défendre, des Magic Knight. Ensemble, les trois amies vont apprendre les valeurs de l'amitié et du courage. Un scénario fantastique et drôle doublé d'un style graphique particulier caractérise ce grand succès d'heroic-fantasy teinté d'orientalisme.",
+          releaseDate: new Date("2020-11-18"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 11,
+          title: "tome 2",
+          image: "https://assets.bubblebd.com/img/l6u0kmmb7q/smx9j324sa.jpg",
+          description:
+            "Dans un univers imaginaire, trois collégiennes, Hikaru, Umi et Fû sont confrontées aux forces du mal qui ont envahi un monde parallèle. Arrachées à leur vie quotidienne de Tokyo, elles deviennent des héroïnes combattant pour le défendre, des Magic Knight. Ensemble, les trois amies vont apprendre les valeurs de l'amitié et du courage. Un scénario fantastique et drôle doublé d'un style graphique particulier caractérise ce grand succès d'heroic-fantasy teinté d'orientalisme.",
+          releaseDate: new Date("2021-02-17"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 11,
+          title: "tome 3",
+          image: "https://assets.bubblebd.com/img/qm9sfudngt/hyaleea78o.jpg",
+          description:
+            "Dans un univers imaginaire, trois collégiennes, Hikaru, Umi et Fû sont confrontées aux forces du mal qui ont envahi un monde parallèle. Arrachées à leur vie quotidienne de Tokyo, elles deviennent des héroïnes combattant pour le défendre, des Magic Knight. Ensemble, les trois amies vont apprendre les valeurs de l'amitié et du courage. Un scénario fantastique et drôle doublé d'un style graphique particulier caractérise ce grand succès d'heroic-fantasy teinté d'orientalisme.",
+          releaseDate: new Date("2021-04-21"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 11,
+          title: "tome 4",
+          image: "https://assets.bubblebd.com/img/xp7srrm05d/8em8van544.jpg",
+          description:
+            "Dans un univers imaginaire, trois collégiennes, Hikaru, Umi et Fû sont confrontées aux forces du mal qui ont envahi un monde parallèle. Arrachées à leur vie quotidienne de Tokyo, elles deviennent des héroïnes combattant pour le défendre, des Magic Knight. Ensemble, les trois amies vont apprendre les valeurs de l'amitié et du courage. Un scénario fantastique et drôle doublé d'un style graphique particulier caractérise ce grand succès d'heroic-fantasy teinté d'orientalisme.",
+          releaseDate: new Date("2021-06-23"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 11,
+          title: "tome 5",
+          image: "https://assets.bubblebd.com/img/krpjvikmr7/2xbzazho80.jpg",
+          description:
+            "Dans un univers imaginaire, trois collégiennes, Hikaru, Umi et Fû sont confrontées aux forces du mal qui ont envahi un monde parallèle. Arrachées à leur vie quotidienne de Tokyo, elles deviennent des héroïnes combattant pour le défendre, des Magic Knight. Ensemble, les trois amies vont apprendre les valeurs de l'amitié et du courage. Un scénario fantastique et drôle doublé d'un style graphique particulier caractérise ce grand succès d'heroic-fantasy teinté d'orientalisme.",
+          releaseDate: new Date("2021-09-15"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 11,
+          title: "tome 6",
+          image: "https://assets.bubblebd.com/img/0ljgayyjh2/ohxmzmft8o.jpg",
+          description:
+            "Dans un univers imaginaire, trois collégiennes, Hikaru, Umi et Fû sont confrontées aux forces du mal qui ont envahi un monde parallèle. Arrachées à leur vie quotidienne de Tokyo, elles deviennent des héroïnes combattant pour le défendre, des Magic Knight. Ensemble, les trois amies vont apprendre les valeurs de l'amitié et du courage. Un scénario fantastique et drôle doublé d'un style graphique particulier caractérise ce grand succès d'heroic-fantasy teinté d'orientalisme.",
+          releaseDate: new Date("2021-11-24"),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
