@@ -91,7 +91,7 @@ const Home = () => {
           <div
             key={mangaVolume.id}
             className={classes.mangaVolumeCard}
-            onClick={() => navigate(`/manga/${mangaVolume.id}`)}
+            onClick={() => navigate(`/mangaVolume/${mangaVolume.id}`)}
           >
             <img
               src={mangaVolume.image}

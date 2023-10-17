@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     padding: "10px 30px",
     backgroundColor: "#0097B2",
-    height: "80px",
+    height: "60px",
   },
   logo: {
     height: "100%",
