@@ -8,19 +8,22 @@ import Register from "./pages/register";
 import UserLibrary from "./pages/userLibrary";
 import MangaDetails from "./pages/mangaDetails";
 import AllMangas from "./pages/allMangas";
+import CreateUser from "./pages/createUser";
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/home" element={<Home />} />
+        <Route path="/createUser" element={<CreateUser />} />
         <Route path="/libraryMap" element={<LibraryMap />} />
         <Route path="/login" element={<Login />} />
         <Route path="/myProfil" element={<MyProfil /> } />
         <Route path="/register" element={<Register />} />
         <Route path="/userLibrary" element={<UserLibrary />} />
         <Route path="/mangaVolume/:id" element={<MangaDetails />} />
-        <Route path="/manga/:mangaId" component={AllMangas} />
+        <Route path="/manga/:mangaId" element={<AllMangas />} />
+        <Route path="/" pages={Login} />
       </Routes>
     </Router>
   );

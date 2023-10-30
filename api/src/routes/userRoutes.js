@@ -7,12 +7,11 @@ const User = require("../models/user");
 const db = require("../models");
 const { Manga, MangaVolume } = require("../models");
 
-router.post("/register", register);
-router.post("/login", login);
+router.post('/register', register);
+router.post('/login', login);
 
 router.get("/manga", async (req, res) => {
   try {
-    console.log(Manga);
     const mangas = await Manga.findAll({
       attributes: ["id", "title", "theme", "description", "author", "image"],
     });
@@ -54,7 +53,7 @@ router.get("/mangaVolume/:mangaId/volumes", async (req, res) => {
       where: { mangaId },
       include: {
         model: Manga,
-        attributes: ["title", "author", "theme"],
+        attributes: ["title", "author", "theme", "description", "image"],
       },
     });
     res.json(volumes);

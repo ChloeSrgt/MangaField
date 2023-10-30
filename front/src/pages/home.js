@@ -75,17 +75,36 @@ const Home = () => {
     axios
       .get("http://localhost:4000/mangaVolume")
       .then((response) => {
-        setMangasVolume(response.data);
+        const sortedMangaVolumes = response.data.sort((a, b) => {
+          if(a.mangaId === b.mangaId) {
+            const numA = parseInt(a.title.split(' ')[1]);
+            const numB = parseInt(b.title.split(' ')[1]);
+            return numB - numA; 
+          }
+          return a.mangaId - b.mangaId;
+        });
+        
+        const uniqueMangaVolumes = [];
+        let currentMangaId = null;
+        for(let mangaVolume of sortedMangaVolumes) {
+          if(mangaVolume.mangaId !== currentMangaId) {
+            uniqueMangaVolumes.push(mangaVolume);
+            currentMangaId = mangaVolume.mangaId;
+          }
+        }
+        
+        setMangasVolume(uniqueMangaVolumes);
       })
       .catch((error) => {
         console.error("Erreur lors de la récupération des mangas: ", error);
       });
   }, []);
+  
 
   return (
     <div className={classes.container}>
       <SearchBar />
-      <h1>Catalogue Manga</h1>
+      <h1>Dernières sorties</h1>
       <div className={classes.grid}>
         {mangasVolume.map((mangaVolume, index) => (
           <div
