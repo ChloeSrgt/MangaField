@@ -825,6 +825,116 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          mangaId: 12,
+          title: "tome 28",
+          image: "https://assets.bubblebd.com/img/x9bhct58i7/p5uggov8bh.jpg",
+          description:
+            "Saitama est un jeune homme si puissant qu'il est capable d'éliminer ses adversaires d'un seul coup de poing. On le surnomme One-Punch Man. Il est si fort, que l'euphorie du succès cède place à l'ennui : les victoires ont perdu de leur saveur. Qui pourra lui offrir un véritable combat ?",
+          releaseDate: new Date("2023-11-09"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 13,
+          title: "tome 37",
+          image: "https://assets.bubblebd.com/img/g44yw7id45/fw7jhuhpzk.jpg",
+          description:
+            "Le piège est en place ! Le stratagème des héros a fonctionné, et leurs ennemis sont maintenant éparpillés dans différentes zones de combat, où des adversaires à leur mesure les attendent. Tandis que Shoto tente d'arrêter son frère, l'équipe d'Endeavor et Hawks affronte le terrible All for One...Mais les choses se corsent lorsque Deku, qui devait assister Best Jeanist et Mirko contre Tomura Shigaraki, est attiré par Himiko dans le mauvais portail !Retrouvez les super-héros du manga phénomène My Hero Academia !",
+          releaseDate: new Date("2023-11-02"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 14,
+          title: "tome 1",
+          image: "https://assets.bubblebd.com/img/tr08gnsinb/lseh0qlimz.jpg",
+          description:
+            "Shoko Nishimiya est sourde depuis la naissance. Même équipée d'un appareil auditif, elle peine à saisir les conversations, à comprendre ce qui se passe autour d'elle. Effrayé par ce handicap, son père a fini par l'abandonner, laissant sa mère l'élever seule. Quand Shoko est transférée dans une nouvelle école, elle fait de son mieux pour dépasser ce handicap, mais malgré ses efforts pour s'intégrer dans ce nouvel environnement, rien n'y fait : les persécutions se multiplient, menées par Shoya Ishida, le leader de la classe.",
+          releaseDate: new Date("2015-01-22"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 14,
+          title: "tome 2",
+          image: "https://assets.bubblebd.com/img/o0ihtcyqon/yuizorcg5q.jpg",
+          description:
+            "Pour Shoya, devenu le nouveau souffre-douleur de sa classe, rien ne change après le départ de Shoko. Pire, le jeune garçon se rend compte qu’elle faisait preuve de gentillesse à son égard et se sent d’autant plus coupable ! Mis à l’écart pendant toute sa scolarité, il ne parvient plus à se lier aux autres. Il se coupe du monde et finit par perdre toute envie de vivre. Mais l’adolescent n’a jamais oublié la jeune sourde. Il prend donc la résolution de la retrouver pour lui présenter ses excuses avant de mettre fin à ses jours…",
+          releaseDate: new Date("2015-03-12"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 14,
+          title: "tome 3",
+          image: "https://assets.bubblebd.com/img/3zimdbziut/sc8wq11b1z.jpg",
+          description:
+            "Jusqu'au jour où la brimade de trop provoque une plainte de la famille de Shoko, ainsi que l'intervention du directeur de l'école. Ce jour-là, tout bascule pour Shoya : ses camarades, qui jusqu'ici ne manquaient pas eux non plus une occasion de tourmenter la jeune fille, vont se retourner contre lui et le désigner comme seul responsable... ",
+          releaseDate: new Date("2015-05-15"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 14,
+          title: "tome 4",
+          image: "https://assets.bubblebd.com/img/0grsjc7uix/4b7vxqysqm.jpg",
+          description:
+            "Shoko Nishimiya est sourde depuis la naissance. Même équipée d'un appareil auditif, elle peine à saisir les conversations, à comprendre ce qui se passe autour d'elle. Effrayé par ce handicap, son père a fini par l'abandonner, laissant sa mère l'élever seule. Quand Shoko est transférée dans une nouvelle école, elle fait de son mieux pour dépasser ce handicap, mais malgré ses efforts pour s'intégrer dans ce nouvel environnement, rien n'y fait : les persécutions se multiplient, menées par Shoya Ishida, le leader de la classe.",
+          releaseDate: new Date("2015-07-02"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 14,
+          title: "tome 5",
+          image: "https://assets.bubblebd.com/img/9zy7jbskjd/wq0335h22q.jpgg",
+          description:
+            "Pour Shoya, devenu le nouveau souffre-douleur de sa classe, rien ne change après le départ de Shoko. Pire, le jeune garçon se rend compte qu'elle faisait preuve de gentillesse à son égard et se sent d'autant plus coupable ! Mis à l'écart pendant toute sa scolarité, il ne parvient plus à se lier aux autres. Il se coupe du monde et finit par perdre toute envie de vivre. Mais l'adolescent n'a jamais oublié la jeune sourde. Il prend donc la résolution de la retrouver pour lui présenter ses excuses avant de mettre fin à ses jours.",
+          releaseDate: new Date("2015-10-08"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 14,
+          title: "tome 6",
+          image: "https://assets.bubblebd.com/img/hp7m8bzczv/m90vf68p1m.jpg",
+          description:
+            "Pour Shoya, devenu le nouveau souffre-douleur de sa classe, rien ne change après le départ de Shoko. Pire, le jeune garçon se rend compte qu'elle faisait preuve de gentillesse à son égard et se sent d'autant plus coupable ! Mis à l'écart pendant toute sa scolarité, il ne parvient plus à se lier aux autres. Il se coupe du monde et finit par perdre toute envie de vivre. Mais l'adolescent n'a jamais oublié la jeune sourde. Il prend donc la résolution de la retrouver pour lui présenter ses excuses avant de mettre fin à ses jours.",
+          releaseDate: new Date("2016-01-14"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 14,
+          title: "tome 7",
+          image: "https://assets.bubblebd.com/img/6etgrsuuwy/cjw0zobn99.jpg",
+          description:
+            "Shoya se retrouve embarqué dans une sortie au parc d'attractions, qu'il commence à apprécier malgré la présence de Miki et de Naoka. Mais les choses dérapent lorsqu'il reconnaît Kazuki, son ancien ami d'enfance, à l'un des stands. Quelques jours plus tard, un triste événement vient frapper les Nishimiya : le décès de la grand-mère de Shoko, véritable pilier de la famille. Alors que tout le monde tente de remonter le moral à Yuzuru, celle-ci décide d'aider sa soeur à faire sa déclaration. De son côté, Shoya accepte de participer au tournage du film de Tomohiro. à condition que la jeune malentendante fasse partie de l'aventure !",
+          releaseDate: new Date("2016-04-28"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 15,
+          title: "tome 1",
+          image: "https://assets.bubblebd.com/img/gbyn8l41vc/z31d2v4rvc.jpg",
+          description:
+            "Bien que toujours en proie aux souvenirs de son passé et rongé par le remord des violences qu'il faisait subir à son ex petit ami Yumi, Kannosuke Hayashida a finalement accepté les sentiments amoureux de son collègue de travail Ayuma Shuuna avec qui il avait débuté une relation uniquement basée sur le sexe. C'est alors que Ayuma est transféré à Osaka pour une mission de deux ans. Commence ainsi une relation longue distance entre les deux hommes.",
+          releaseDate: new Date("2021-02-26"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 15,
+          title: "tome 2",
+          image: "https://assets.bubblebd.com/img/9jhe3ffyye/efl0za1kq7.jpg",
+          description:
+            "Bien que toujours en proie aux souvenirs de son passé et rongé par le remord des violences qu'il faisait subir à son ex petit ami Yumi, Kannosuke Hayashida a finalement accepté les sentiments amoureux de son collègue de travail Ayuma Shuuna avec qui il avait débuté une relation uniquement basée sur le sexe. C'est alors que Ayuma est transféré à Osaka pour une mission de deux ans. Commence ainsi une relation longue distance entre les deux hommes.",
+          releaseDate: new Date("2021-06-25"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );

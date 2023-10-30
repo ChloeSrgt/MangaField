@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+
+    const handleCreateUser = () => {
+        navigate("/createUser");
+      };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -51,6 +58,7 @@ const Login = () => {
                         required 
                     />
                 </div>
+                <button onClick={handleCreateUser}>Créer un compte</button>
                 <div>
                     <button type="submit">Se connecter</button>
                 </div>

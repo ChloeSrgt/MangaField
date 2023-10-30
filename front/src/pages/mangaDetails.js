@@ -3,7 +3,7 @@ import SearchBar from "../components/searchBar";
 import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -115,7 +115,7 @@ const MangaDetails = () => {
         <div className={classes.mangaDetails}>
           <h2 className={classes.title}>
             <Link
-              to={`/manga/${mangaDetails.Manga.id}`}
+              to={`/manga/${mangaDetails.mangaId}`}
               className={classes.titleLink}
             >
               {mangaDetails.Manga.title}

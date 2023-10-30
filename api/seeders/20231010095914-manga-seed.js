@@ -127,6 +127,50 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          id: 12,
+          title: "One-Punch Man",
+          image: "https://assets.bubblebd.com/img/hitxkhlixl/x2fcmru5tg.jpg",
+          description:
+          "Saitama est un jeune homme si puissant qu'il est capable d'éliminer ses adversaires d'un seul coup de poing. On le surnomme One-Punch Man. Il est si fort, que l'euphorie du succès cède place à l'ennui : les victoires ont perdu de leur saveur. Qui pourra lui offrir un véritable combat ?",
+          author: "Yusuke Murata",
+          theme: "Récit de super-héros, Humour, Aventure, Amitié",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          id: 13,
+          title: "My Hero Academia",
+          image: "https://assets.bubblebd.com/img/n4u5jnnsce/gr45f9d4jh.jpg",
+          description:
+          "Dans un monde où 80 % de la population possède un super-pouvoir appelé alter, les héros font partie de la vie quotidienne. Et les super-vilains aussi ! Face à eux se dresse l’invincible All Might, le plus puissant des héros ! Le jeune Izuku Midoriya en est un fan absolu. Il n’a qu’un rêve : entrer à la Hero Academia pour suivre les traces de son idole. Le problème, c’est qu’il fait partie des 20 % qui n’ont aucun pouvoir… Son destin est bouleversé le jour où sa route croise celle d’All Might en personne ! Ce dernier lui offre une chance inespérée de voir son rêve se réaliser. Pour Izuku, le parcours du combattant ne fait que commencer !",
+          author: "Kōhei Horikoshia",
+          theme: "Récit d'aventure, Science fantasy, Fiction de super-héros, Genre comique, Science-fiction",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          id: 14,
+          title: "A Silent Voice",
+          image: "https://assets.bubblebd.com/img/tr08gnsinb/lseh0qlimz.jpg",
+          description:
+            "Shoko Nishimiya est sourde depuis la naissance. Même équipée d'un appareil auditif, elle peine à saisir les conversations, à comprendre ce qui se passe autour d'elle. Effrayé par ce handicap, son père a fini par l'abandonner, laissant sa mère l'élever seule. Quand Shoko est transférée dans une nouvelle école, elle fait de son mieux pour dépasser ce handicap, mais malgré ses efforts pour s'intégrer dans ce nouvel environnement, rien n'y fait : les persécutions se multiplient, menées par Shoya Ishida, le leader de la classe.",
+          author: "Yoshitoki Ōima",
+          theme: "Amitié, Ecole, Handicap, Harcèlement, Société",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          id: 15,
+          title: "The Monster Exposed",
+          image: "https://assets.bubblebd.com/img/gbyn8l41vc/z31d2v4rvc.jpg",
+          description:
+            "Bien que toujours en proie aux souvenirs de son passé et rongé par le remord des violences qu'il faisait subir à son ex petit ami Yumi, Kannosuke Hayashida a finalement accepté les sentiments amoureux de son collègue de travail Ayuma Shuuna avec qui il avait débuté une relation uniquement basée sur le sexe. C'est alors que Ayuma est transféré à Osaka pour une mission de deux ans. Commence ainsi une relation longue distance entre les deux hommes.",
+          author: "Tanaka Ogeretsu",
+          theme: "Viol, yaoi",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );
