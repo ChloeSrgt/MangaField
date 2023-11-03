@@ -3,12 +3,14 @@ const router = express.Router();
 const { register, login } = require("../controllers/userController");
 const authMiddleware = require("../middlewares/authMiddleware");
 const UserLibrary = require("../models/userLibrary");
-const User = require("../models/user");
+const { User } = require('../models');
 const db = require("../models");
 const { Manga, MangaVolume } = require("../models");
 
 router.post('/register', register);
 router.post('/login', login);
+
+
 
 router.get("/manga", async (req, res) => {
   try {
@@ -164,5 +166,24 @@ router.get("/my-library", authMiddleware, async (req, res) => {
     res.status(500).send("Erreur lors de la récupération de la bibliothèque.");
   }
 });
+
+// Route pour récupérer les informations de l'utilisateur connecté
+router.get("/user/profile", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user.id; 
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).send("Utilisateur non trouvé.");
+    }
+    res.json({ name: user.name, email: user.email, pseudo: user.pseudo, bio: user.bio, address: user.address });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur lors de la récupération du profil utilisateur.");
+  }
+});
+
+router.put('/updateProfile', authMiddleware, async (req, res) => {
+});
+
 
 module.exports = router;

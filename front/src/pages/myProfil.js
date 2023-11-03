@@ -1,5 +1,6 @@
 import { makeStyles } from "@mui/styles";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import SearchBar from "../components/searchBar";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -74,11 +75,55 @@ const MyProfile = () => {
     setProfileData({ ...profileData, profileImage: file });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(profileData);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/getProfile', {
+          headers: {
+            'auth-token': localStorage.getItem('token') 
+          }
+        });
+        setProfileData({
+          name: response.data.name,
+          email: response.data.email,
+          adress: response.data.adress,
+          bio: response.data.bio,
+          pseudo: response.data.pseudo,
+          profileImage: response.data.profileImage,
+        });
+      } catch (error) {
+        console.error("Erreur lors de la récupération du profil", error);
+      }
+    };
+    fetchData();
+  }, []);
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append('name', profileData.name);
+    formData.append('email', profileData.email);
+    formData.append('adress', profileData.adress);
+    formData.append('pseudo', profileData.pseudo);
+    formData.append('bio', profileData.bio);
+    
+    if (profileData.profileImage) {
+      formData.append('profileImage', profileData.profileImage);
+    }
+    
+    try {
+
+      await axios.put('http://localhost:4000/updateProfile', formData, {
+        headers: {
+          'auth-token': localStorage.getItem('token'), 
+          'Content-Type': 'multipart/form-data' 
+        }
+      });
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour du profil", error);
+    }
+  };
   return (
     <div className={classes.container}>
       <SearchBar />
