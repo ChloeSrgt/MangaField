@@ -3,6 +3,9 @@ import SearchBar from "../components/searchBar";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Footer from "../components/footer";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import Tooltip from "@mui/material/Tooltip";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -42,14 +45,17 @@ const useStyles = makeStyles(() => ({
     fontSize: "11px",
     zIndex: 1,
   },
-
   mangaVolumeImage: {
+    width: "280px",
+    height: "350px",
     borderRadius: "8px",
-    objectFit: "cover",
+    objectFit: "contain",
+    alignSelf: "center",
   },
   mangaVolumeTitle: {
     fontSize: "15px",
     display: "inline-block",
+    alignItems: "flex-start",
     marginRight: "5px",
     marginBottom: "5px",
   },
@@ -64,53 +70,125 @@ const useStyles = makeStyles(() => ({
     color: "#777",
     textAlign: "left",
   },
+  menuBookIcon: {
+    position: "absolute",
+    bottom: "10px",
+    right: "10px",
+    cursor: "pointer",
+    color: "#0097B2",
+    "&:hover": {
+      color: "#007b91",
+    },
+  },
 }));
 
 const Home = () => {
   const classes = useStyles();
   const [mangasVolume, setMangasVolume] = useState([]);
   const navigate = useNavigate();
+  const [userLibrary, setUserLibrary] = useState([]);
+
+  const isLoggedIn = () => localStorage.getItem("token");
+
+  useEffect(() => {
+    if (isLoggedIn()) {
+      const token = localStorage.getItem("token");
+      axios
+        .get("http://localhost:4000/userLibrary", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setUserLibrary(response.data);
+        })
+        .catch((error) => {
+          console.error("Erreur lors de la récupération de la bibliothèque utilisateur", error);
+        });
+    }
+  }, []);
 
   useEffect(() => {
     axios
       .get("http://localhost:4000/mangaVolume")
       .then((response) => {
+        setMangasVolume(mangasVolume);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la récupération des mangas: ", error);
+      });
+  }, []);
+
+  const addToLibrary = (event, mangaVolumeId) => {
+    event.stopPropagation();
+    if (isLoggedIn()) {
+      const token = localStorage.getItem("token");
+      axios
+        .post(
+          "http://localhost:4000/userLibrary",
+          { mangaId: mangaVolumeId }, 
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log("Manga added:", response.data);
+          const addedMangaVolume = mangasVolume.find(mv => mv.id === mangaVolumeId);
+          setUserLibrary([...userLibrary, addedMangaVolume]);
+        })
+        .catch((error) => {
+          console.error("Erreur ajout manga:", error);
+        });
+    } else {
+      navigate("/login");
+    }
+  };
+  
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/mangaVolume")
+      .then((response) => {
         const sortedMangaVolumes = response.data.sort((a, b) => {
-          if(a.mangaId === b.mangaId) {
-            const numA = parseInt(a.title.split(' ')[1]);
-            const numB = parseInt(b.title.split(' ')[1]);
-            return numB - numA; 
+          if (a.mangaId === b.mangaId) {
+            const numA = parseInt(a.title.split(" ")[1]);
+            const numB = parseInt(b.title.split(" ")[1]);
+            return numB - numA;
           }
           return a.mangaId - b.mangaId;
         });
-        
+
         const uniqueMangaVolumes = [];
         let currentMangaId = null;
-        for(let mangaVolume of sortedMangaVolumes) {
-          if(mangaVolume.mangaId !== currentMangaId) {
+        for (let mangaVolume of sortedMangaVolumes) {
+          if (mangaVolume.mangaId !== currentMangaId) {
             uniqueMangaVolumes.push(mangaVolume);
             currentMangaId = mangaVolume.mangaId;
           }
         }
-        
+
         setMangasVolume(uniqueMangaVolumes);
       })
       .catch((error) => {
         console.error("Erreur lors de la récupération des mangas: ", error);
       });
   }, []);
-  
 
   return (
     <div className={classes.container}>
       <SearchBar />
       <h1>Dernières sorties</h1>
       <div className={classes.grid}>
-        {mangasVolume.map((mangaVolume, index) => (
+        {mangasVolume.map((mangaVolume) => (
           <div
             key={mangaVolume.id}
             className={classes.mangaVolumeCard}
-            onClick={() => navigate(`/mangaVolume/${mangaVolume.id}`)}
+            onClick={() =>
+              isLoggedIn()
+                ? navigate(`/mangaVolume/${mangaVolume.id}`)
+                : navigate("/login")
+            }
           >
             <img
               src={mangaVolume.image}
@@ -124,6 +202,12 @@ const Home = () => {
               <p className={classes.mangaTitle}>- {mangaVolume.title}</p>
             </div>
             <p className={classes.mangaAuthor}>{mangaVolume.Manga.author}</p>
+            <Tooltip title="Ajouter à ma bibliothèque">
+              <MenuBookIcon
+                className={classes.menuBookIcon}
+                onClick={(event) => addToLibrary(event, mangaVolume.id)}
+              />
+            </Tooltip>
             <p className={classes.releaseDate}>
               <strong>Sortie le</strong>{" "}
               {new Date(mangaVolume.releaseDate).toLocaleDateString()}
@@ -131,6 +215,7 @@ const Home = () => {
           </div>
         ))}
       </div>
+      <Footer />
     </div>
   );
 };

@@ -1,11 +1,11 @@
 import React from "react";
 import { makeStyles } from "@mui/styles";
-import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router";
 import { InputBase } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import logo from "../assets/logo.png";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
-import { useNavigate } from "react-router";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     padding: "10px 30px",
     backgroundColor: "#0097B2",
-    height: "60px",
+    height: "45px",
   },
   logo: {
     height: "100%",
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   searchContainer: {
-    width: "30%",
+    width: "25%",
   },
   search: {
     position: "relative",
@@ -80,7 +80,10 @@ const SearchBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+    // Si l'utilisateur n'est pas connecté, n'ouvre pas le menu
+    if (isLoggedIn()) {
+      setAnchorEl(event.currentTarget);
+    }
   };
 
   const handleMenuClose = () => {
@@ -88,7 +91,9 @@ const SearchBar = () => {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("token");
     handleMenuClose();
+    navigate("/login");
   };
 
   const handleProfile = () => {
@@ -106,6 +111,10 @@ const SearchBar = () => {
   };
   const handleHome = () => {
     navigate("/home");
+  };
+
+  const isLoggedIn = () => {
+    return localStorage.getItem("token") ? true : false;
   };
 
   return (
@@ -134,7 +143,9 @@ const SearchBar = () => {
       </div>
       <div className={classes.iconContainer}>
         <MenuBookIcon className={classes.icon} onClick={handleUserLibrary} />
-        <PermIdentityIcon className={classes.icon} onClick={handleMenuOpen} />
+        {isLoggedIn() && (
+          <PermIdentityIcon className={classes.icon} onClick={handleMenuOpen} />
+        )}
         <Menu
           anchorEl={anchorEl}
           keepMounted

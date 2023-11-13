@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const { register, login } = require("../controllers/userController");
-const authMiddleware = require("../middlewares/authMiddleware");
-const UserLibrary = require("../models/userLibrary");
-const User = require("../models/user");
+const {verifyToken} = require("../middlewares/authMiddleware");
+// const UserLibrary = require("../models/userLibrary");
+const { User } = require("../models");
 const db = require("../models");
-const { Manga, MangaVolume } = require("../models");
+const { Manga, MangaVolume, UserLibrary } = require("../models");
 
-router.post('/register', register);
-router.post('/login', login);
+router.post("/register", register);
+router.post("/login", login);
 
 router.get("/manga", async (req, res) => {
   try {
@@ -62,7 +62,6 @@ router.get("/mangaVolume/:mangaId/volumes", async (req, res) => {
     res.status(500).send("Erreur lors de la récupération des volumes.");
   }
 });
-
 
 router.get("/mangaVolume", async (req, res) => {
   try {
@@ -127,7 +126,7 @@ router.get("/mangaVolume/:mangaVolumeId", async (req, res) => {
   }
 });
 
-router.post("/manga", authMiddleware, async (req, res) => {
+router.post("/manga", verifyToken, async (req, res) => {
   try {
     const mangaData = await Manga.create(req.body);
     res.json(mangaData);
@@ -136,7 +135,7 @@ router.post("/manga", authMiddleware, async (req, res) => {
   }
 });
 
-router.post("/my-library", authMiddleware, async (req, res) => {
+router.post("/userLibrary", verifyToken, async (req, res) => {
   try {
     const userId = req.user.id;
     const { mangaId } = req.body;
@@ -153,7 +152,7 @@ router.post("/my-library", authMiddleware, async (req, res) => {
   }
 });
 
-router.get("/my-library", authMiddleware, async (req, res) => {
+router.get("/userLibrary", verifyToken, async (req, res) => {
   try {
     const userId = req.user.id;
     const userData = await User.findByPk(userId, {
@@ -161,7 +160,31 @@ router.get("/my-library", authMiddleware, async (req, res) => {
     });
     res.json(userData.Mangas);
   } catch (err) {
+    console.error(err);
     res.status(500).send("Erreur lors de la récupération de la bibliothèque.");
+  }
+});
+
+// Route pour récupérer les informations de l'utilisateur connecté
+router.get("/user/profile", verifyToken, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).send("Utilisateur non trouvé.");
+    }
+    res.json({
+      name: user.name,
+      email: user.email,
+      userName: user.userName,
+      bio: user.bio,
+      address: user.address,
+    });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .send("Erreur lors de la récupération du profil utilisateur.");
   }
 });
 

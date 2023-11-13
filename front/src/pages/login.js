@@ -1,70 +1,138 @@
-import React, { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#0097B2",
+    },
+  },
+});
 
 const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    const handleCreateUser = () => {
-        navigate("/createUser");
-      };
+    try {
+      const response = await axios.post("http://localhost:4000/login", {
+        email,
+        password,
+      });
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-            
-        try {
-            const response = await fetch('http://localhost:4000/users/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, password })
-            });
-    
-            const data = await response.json();
-    
-            if (response.status !== 200) {
-                throw new Error(data);
-            }
-            localStorage.setItem('token', data);
-        } catch (error) {
-            setError(error.message);
-        }
-    };    
-    
-    return (
-        <div>
-            <h2>Connexion</h2>
-            {error && <p style={{color: 'red'}}>{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email:</label>
-                    <input 
-                        type="email" 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)} 
-                        required 
-                    />
-                </div>
-                <div>
-                    <label>Mot de passe:</label>
-                    <input 
-                        type="password" 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)} 
-                        required 
-                    />
-                </div>
-                <button onClick={handleCreateUser}>Créer un compte</button>
-                <div>
-                    <button type="submit">Se connecter</button>
-                </div>
-            </form>
-        </div>
-    );
-}
+      localStorage.setItem("token", response.data);
+      navigate("/home");
+    } catch (error) {
+      setError(
+        error.response ? error.response.data : "Erreur lors de la connexion"
+      );
+    }
+  };
+
+  const handleRegister = () => {
+    navigate("/Register");
+  };
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 30,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "#0097B2" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Connexion
+          </Typography>
+          {error && <Typography color="error">{error}</Typography>}
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Mot de passe"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {/* <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Se souvenir de moi"
+            /> */}
+            <Box
+              sx={{ display: "flex", justifyContent: "center", mt: 3, mb: 2 }}
+            >
+              <Button type="submit" variant="contained" color="primary">
+                Se connecter
+              </Button>
+            </Box>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Mot de passe oublié?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link
+                  href="#"
+                  variant="body2"
+                  onClick={handleRegister}
+                  style={{ cursor: "pointer" }}
+                >
+                  {"Pas de compte?"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
+  );
+};
 
 export default Login;
