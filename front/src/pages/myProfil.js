@@ -62,7 +62,7 @@ const MyProfile = () => {
     email: "",
     bio: "",
     address: "", 
-    pseudo: "", 
+    userName: "", 
     profileImage: null,
   });
   const handleInputChange = (event) => {
@@ -88,7 +88,7 @@ const MyProfile = () => {
           email: response.data.email,
           adress: response.data.adress,
           bio: response.data.bio,
-          pseudo: response.data.pseudo,
+          userName: response.data.userName,
           profileImage: response.data.profileImage,
         });
       } catch (error) {
@@ -105,7 +105,7 @@ const MyProfile = () => {
     formData.append('name', profileData.name);
     formData.append('email', profileData.email);
     formData.append('adress', profileData.adress);
-    formData.append('pseudo', profileData.pseudo);
+    formData.append('userName', profileData.userName);
     formData.append('bio', profileData.bio);
     
     if (profileData.profileImage) {
@@ -128,7 +128,7 @@ const MyProfile = () => {
     <div className={classes.container}>
       <SearchBar />
       <div className={classes.formContainer}>
-        {profileData.pseudo && <h3>Hello, {profileData.pseudo}!</h3>}
+        {profileData.userName && <h3>Hello, {profileData.userName}!</h3>}
         
         <h2>Modifier votre profil</h2>
         <form className={classes.form} onSubmit={handleSubmit}>
@@ -155,9 +155,9 @@ const MyProfile = () => {
           />
           <TextField
             className={classes.input}
-            label="Pseudo"
-            name="pseudo" 
-            value={profileData.pseudo}
+            label="userName"
+            name="userName" 
+            value={profileData.userName}
             onChange={handleInputChange}
           />
           <TextField

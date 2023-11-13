@@ -94,7 +94,7 @@ const Home = () => {
     if (isLoggedIn()) {
       const token = localStorage.getItem("token");
       axios
-        .get("http://localhost:4000/my-library", {
+        .get("http://localhost:4000/userLibrary", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -103,7 +103,7 @@ const Home = () => {
           setUserLibrary(response.data);
         })
         .catch((error) => {
-          console.error("Error fetching user library", error);
+          console.error("Erreur lors de la récupération de la bibliothèque utilisateur", error);
         });
     }
   }, []);
@@ -115,7 +115,7 @@ const Home = () => {
         setMangasVolume(mangasVolume);
       })
       .catch((error) => {
-        console.error("Error fetching mangas: ", error);
+        console.error("Erreur lors de la récupération des mangas: ", error);
       });
   }, []);
 
@@ -125,7 +125,7 @@ const Home = () => {
       const token = localStorage.getItem("token");
       axios
         .post(
-          "http://localhost:4000/my-library",
+          "http://localhost:4000/userLibrary",
           { mangaId: mangaVolumeId }, 
           {
             headers: {
@@ -139,7 +139,7 @@ const Home = () => {
           setUserLibrary([...userLibrary, addedMangaVolume]);
         })
         .catch((error) => {
-          console.error("Error adding manga:", error);
+          console.error("Erreur ajout manga:", error);
         });
     } else {
       navigate("/login");

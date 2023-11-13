@@ -83,7 +83,7 @@ const UserLibrary = () => {
   const [userLibrary, setUserLibrary] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:4000/my-library")
+    axios.get("http://localhost:4000/userLibrary")
       .then(response => {
         setUserLibrary(response.data);
       })

@@ -20,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     theme: DataTypes.STRING,
     description: DataTypes.STRING,
-    releaseDate: DataTypes.DATE,
     author: DataTypes.STRING,
     image: DataTypes.STRING
   }, {

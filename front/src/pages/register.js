@@ -29,7 +29,7 @@ const useStyles = makeStyles(() => ({
 const Register = () => {
   const classes = useStyles();
   const [formData, setFormData] = useState({
-    pseudo: "",
+    userName: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -72,9 +72,9 @@ const Register = () => {
           margin="normal"
           required
           fullWidth
-          label="Pseudo"
-          name="pseudo" 
-          value={formData.pseudo}
+          label="userName"
+          name="userName" 
+          value={formData.userName}
           onChange={handleChange}
         />
         <TextField
