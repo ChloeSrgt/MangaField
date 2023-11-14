@@ -20,11 +20,12 @@ module.exports = (sequelize, DataTypes) => {
     releaseDate: DataTypes.DATE,
     description: DataTypes.STRING,
     image: DataTypes.STRING,
-    mangaId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'MangaVolume',
   });
+
+  
 
   return MangaVolume;
 };

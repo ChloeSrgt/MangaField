@@ -177,6 +177,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete("MangaVolume", null, {});
+    return queryInterface.bulkDelete("Mangas", null, {});
   },
 };

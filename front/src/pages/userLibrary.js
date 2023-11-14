@@ -80,12 +80,12 @@ import SearchBar from "../components/searchBar";
 
 const UserLibrary = () => {
   const classes = useStyles();
-  const [userLibrary, setUserLibrary] = useState([]);
+  const [userMangaVolume, setUserMangaVolume] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:4000/userLibrary")
+    axios.get("http://localhost:4000/userMangaVolume")
       .then(response => {
-        setUserLibrary(response.data);
+        setUserMangaVolume(response.data);
       })
       .catch(error => {
         console.error("Error fetching user library", error);
@@ -97,7 +97,7 @@ const UserLibrary = () => {
       <SearchBar />
       <p>My Manga Collection:</p>
       <div className={classes.grid}>
-        {userLibrary.map(manga => (
+        {userMangaVolume.map(manga => (
           <div key={manga.id} className={classes.mangaVolumeCard}>
             <img src={manga.image} alt={manga.title} className={classes.mangaVolumeImage} />
             <div>

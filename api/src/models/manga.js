@@ -11,8 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Manga.belongsToMany(models.User, { through: 'UserLibrary', foreignKey: 'mangaId' });
-      
+      Manga.hasMany(models.MangaVolume, { foreignKey: 'mangaId' });
     }
   }
   

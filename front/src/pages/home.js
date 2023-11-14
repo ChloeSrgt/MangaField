@@ -86,7 +86,7 @@ const Home = () => {
   const classes = useStyles();
   const [mangasVolume, setMangasVolume] = useState([]);
   const navigate = useNavigate();
-  const [userLibrary, setUserLibrary] = useState([]);
+  const [userMangaVolume, setUserMangaVolume] = useState([]);
 
   const isLoggedIn = () => localStorage.getItem("token");
 
@@ -94,13 +94,13 @@ const Home = () => {
     if (isLoggedIn()) {
       const token = localStorage.getItem("token");
       axios
-        .get("http://localhost:4000/userLibrary", {
+        .get("http://localhost:4000/userMangaVolume", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then((response) => {
-          setUserLibrary(response.data);
+          setUserMangaVolume(response.data);
         })
         .catch((error) => {
           console.error("Erreur lors de la récupération de la bibliothèque utilisateur", error);
@@ -125,7 +125,7 @@ const Home = () => {
       const token = localStorage.getItem("token");
       axios
         .post(
-          "http://localhost:4000/userLibrary",
+          "http://localhost:4000/userMangaVolume",
           { mangaId: mangaVolumeId }, 
           {
             headers: {
@@ -136,7 +136,7 @@ const Home = () => {
         .then((response) => {
           console.log("Manga added:", response.data);
           const addedMangaVolume = mangasVolume.find(mv => mv.id === mangaVolumeId);
-          setUserLibrary([...userLibrary, addedMangaVolume]);
+          setUserMangaVolume([...userMangaVolume, addedMangaVolume]);
         })
         .catch((error) => {
           console.error("Erreur ajout manga:", error);

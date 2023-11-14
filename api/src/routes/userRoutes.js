@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const { register, login } = require("../controllers/userController");
 const {verifyToken} = require("../middlewares/authMiddleware");
-// const UserLibrary = require("../models/userLibrary");
+// const userMangaVolume = require("../models/userMangaVolume");
 const { User } = require("../models");
 const db = require("../models");
-const { Manga, MangaVolume, UserLibrary } = require("../models");
+const { Manga, MangaVolume, UserMangaVolume } = require("../models");
 
 router.post("/register", register);
 router.post("/login", login);
@@ -135,30 +135,30 @@ router.post("/manga", verifyToken, async (req, res) => {
   }
 });
 
-router.post("/userLibrary", verifyToken, async (req, res) => {
+router.post("/userMangaVolume", verifyToken, async (req, res) => {
   try {
     const userId = req.user.id;
-    const { mangaId } = req.body;
+    const { mangaVolumeId } = req.body;
 
-    const mangaData = await Manga.findByPk(mangaId);
-    if (!mangaData) {
-      return res.status(404).send("Manga non trouvé.");
+    const mangaVolumeData = await Manga.findByPk(mangaVolumeId);
+    if (!mangaVolumeData) {
+      return res.status(404).send("Manga volume non trouvé.");
     }
 
-    await UserLibrary.create({ userId, mangaId });
-    res.send("Manga ajouté à la bibliothèque.");
+    await UserMangaVolume.create({ userId, mangaVolumeId });
+    res.send("Manga volume ajouté à la bibliothèque.");
   } catch (err) {
-    res.status(500).send("Erreur lors de l'ajout du manga à la bibliothèque.");
+    res.status(500).send("Erreur lors de l'ajout du manga volume à la bibliothèque.");
   }
 });
 
-router.get("/userLibrary", verifyToken, async (req, res) => {
+router.get("/userMangaVolume", verifyToken, async (req, res) => {
   try {
     const userId = req.user.id;
     const userData = await User.findByPk(userId, {
-      include: Manga,
+      include: UserMangaVolume,
     });
-    res.json(userData.Mangas);
+    res.json(userData.UserMangaVolumes);
   } catch (err) {
     console.error(err);
     res.status(500).send("Erreur lors de la récupération de la bibliothèque.");

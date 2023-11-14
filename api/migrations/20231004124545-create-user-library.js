@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('UserLibraries', {
+    await queryInterface.createTable('UserMangaVolumes', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,7 +12,7 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER
       },
-      mangaId: {
+      mangaVolumeId: {
         type: Sequelize.INTEGER
       },
       createdAt: {
