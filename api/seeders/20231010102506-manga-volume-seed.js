@@ -888,7 +888,7 @@ module.exports = {
         {
           mangaId: 14,
           title: "tome 5",
-          image: "https://assets.bubblebd.com/img/9zy7jbskjd/wq0335h22q.jpgg",
+          image: "https://assets.bubblebd.com/img/9zy7jbskjd/wq0335h22q.jpg",
           description:
             "Pour Shoya, devenu le nouveau souffre-douleur de sa classe, rien ne change après le départ de Shoko. Pire, le jeune garçon se rend compte qu'elle faisait preuve de gentillesse à son égard et se sent d'autant plus coupable ! Mis à l'écart pendant toute sa scolarité, il ne parvient plus à se lier aux autres. Il se coupe du monde et finit par perdre toute envie de vivre. Mais l'adolescent n'a jamais oublié la jeune sourde. Il prend donc la résolution de la retrouver pour lui présenter ses excuses avant de mettre fin à ses jours.",
           releaseDate: new Date("2015-10-08"),
@@ -941,6 +941,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete("MangaVolume", null, {});
+    return queryInterface.bulkDelete("MangaVolumes", null, {});
   },
 };

@@ -91,8 +91,8 @@ const MangaDetails = () => {
   const { id } = useParams();
   const [mangaDetails, setMangaDetails] = useState(null);
 
-  const handleUserLibrary = () => {
-    Navigate("/userLibrary");
+  const handleUserMangaVolume = () => {
+    Navigate("/userMangaVolume");
   };
 
   useEffect(() => {
@@ -123,7 +123,7 @@ const MangaDetails = () => {
             {` - ${mangaDetails.title}`}
           </h2>
           <div className={classes.buttonContainer}>
-            <button className={classes.button} onClick={handleUserLibrary}>Ajouter à ma collection</button>
+            <button className={classes.button} onClick={handleUserMangaVolume}>Ajouter à ma collection</button>
             <button className={classes.button} >Trouver ma librairie</button>
           </div>
         </div>

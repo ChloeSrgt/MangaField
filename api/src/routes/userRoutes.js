@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const { register, login } = require("../controllers/userController");
-const {verifyToken} = require("../middlewares/authMiddleware");
-// const UserLibrary = require("../models/userLibrary");
+const { verifyToken } = require("../middlewares/authMiddleware");
+// const userMangaVolume = require("../models/userMangaVolume");
 const { User } = require("../models");
 const db = require("../models");
-const { Manga, MangaVolume, UserLibrary } = require("../models");
+const { Manga, MangaVolume, UserMangaVolume } = require("../models");
 
 router.post("/register", register);
 router.post("/login", login);
@@ -135,33 +135,80 @@ router.post("/manga", verifyToken, async (req, res) => {
   }
 });
 
-router.post("/userLibrary", verifyToken, async (req, res) => {
+router.post("/userMangaVolume", verifyToken, async (req, res) => {
   try {
     const userId = req.user.id;
-    const { mangaId } = req.body;
+    const { mangaVolumeId } = req.body;
 
-    const mangaData = await Manga.findByPk(mangaId);
-    if (!mangaData) {
-      return res.status(404).send("Manga non trouvé.");
+    const existingUserMangaVolume = await UserMangaVolume.findOne({
+      where: { userId, mangaVolumeId },
+    });
+
+    if (existingUserMangaVolume) {
+      return res.status(400).send("Ce manga est déjà dans votre bibliothèque.");
     }
 
-    await UserLibrary.create({ userId, mangaId });
-    res.send("Manga ajouté à la bibliothèque.");
+    const mangaVolumeExists = await MangaVolume.findByPk(mangaVolumeId);
+    if (!mangaVolumeExists) {
+      return res.status(404).send("Manga volume non trouvé.");
+    }
+
+    const userMangaVolume = await UserMangaVolume.create({
+      userId,
+      mangaVolumeId,
+    });
+    res.json(userMangaVolume);
   } catch (err) {
-    res.status(500).send("Erreur lors de l'ajout du manga à la bibliothèque.");
+    console.error(err);
+    res
+      .status(500)
+      .send("Erreur lors de l'ajout du manga volume à la bibliothèque.");
   }
 });
 
-router.get("/userLibrary", verifyToken, async (req, res) => {
+router.get("/userMangaVolume", verifyToken, async (req, res) => {
   try {
     const userId = req.user.id;
-    const userData = await User.findByPk(userId, {
-      include: Manga,
+    const userMangaVolumes = await UserMangaVolume.findAll({
+      where: { userId: userId },
+      include: [
+        {
+          model: MangaVolume,
+          include: [Manga],
+        },
+      ],
     });
-    res.json(userData.Mangas);
+    res.json(userMangaVolumes);
   } catch (err) {
     console.error(err);
     res.status(500).send("Erreur lors de la récupération de la bibliothèque.");
+  }
+});
+
+router.delete("/userMangaVolume/:id", verifyToken, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { id } = req.params;
+
+    const userMangaVolume = await UserMangaVolume.findOne({
+      where: { userId, id },
+    });
+
+    if (!userMangaVolume) {
+      return res.status(404).send("Entrée UserMangaVolume introuvable.");
+    }
+
+    await userMangaVolume.destroy();
+
+    res.json({ message: "Entrée UserMangaVolume supprimée avec succès." });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .send(
+        "Erreur lors de la suppression de l'entrée UserMangaVolume : " +
+          err.message
+      );
   }
 });
 
