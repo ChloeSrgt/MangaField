@@ -13,6 +13,8 @@ import Register from "./pages/register";
 import UserLibrary from "./pages/userLibrary";
 import MangaDetails from "./pages/mangaDetails";
 import AllMangas from "./pages/allMangas";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const App = () => {
   const isLoggedIn = () => {

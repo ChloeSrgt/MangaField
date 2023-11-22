@@ -1,11 +1,13 @@
 import { makeStyles } from "@mui/styles";
 import SearchBar from "../components/searchBar";
+import MangaCarousel from "../components/mangaCarousel";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "../components/footer";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
-import Tooltip from "@mui/material/Tooltip";
+import { Button } from "@mui/material";
+import Modal from "react-modal";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -37,9 +39,9 @@ const useStyles = makeStyles(() => ({
   },
   releaseDate: {
     position: "absolute",
-    top: "4px",
+    top: "1px",
     left: "15px",
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    backgroundColor: "rgba(295, 255, 255, 0.7)",
     padding: "4px 4px",
     borderRadius: "4px",
     fontSize: "11px",
@@ -58,6 +60,7 @@ const useStyles = makeStyles(() => ({
     alignItems: "flex-start",
     marginRight: "5px",
     marginBottom: "5px",
+    fontWeight: "bold",
   },
   mangaTitle: {
     fontSize: "15px",
@@ -69,16 +72,53 @@ const useStyles = makeStyles(() => ({
     fontSize: "13px",
     color: "#777",
     textAlign: "left",
+    fontWeight: "bold",
   },
   menuBookIcon: {
-    position: "absolute",
-    bottom: "10px",
-    right: "10px",
     cursor: "pointer",
     color: "#0097B2",
     "&:hover": {
       color: "#007b91",
     },
+  },
+  button: {
+    // backgroundColor: "transparent",
+    color: "#0097B2",
+    borderRadius: "2px solid black",
+    // padding: "8px 18px",
+    textAlign: "center",
+    // textDecoration: "none",
+    display: "inline-block",
+    // fontSize: "14px",
+    // margin: "4px 2px",
+    transition: "background-color 0.4s, color 0.4s",
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#0097B2 !important",
+      color: "white !important",
+    },
+  },
+  errorPopup: {
+    position: "fixed",
+    top: "20px",
+    right: "20px",
+    backgroundColor: "red", 
+    color: "white",
+    padding: "10px",
+    borderRadius: "4px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+    zIndex: "9999",
+  },  
+  successPopup: {
+    position: "fixed",
+    top: "10px",
+    right: "20px",
+    backgroundColor: "#0097B2",
+    color: "white",
+    padding: "10px",
+    borderRadius: "4px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+    zIndex: "9999",
   },
 }));
 
@@ -87,6 +127,11 @@ const Home = () => {
   const [mangasVolume, setMangasVolume] = useState([]);
   const navigate = useNavigate();
   const [userMangaVolume, setUserMangaVolume] = useState([]);
+  const [hoverIndex, setHoverIndex] = useState(null);
+  const [isErrorVisible, setIsErrorVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isAddedToLibraryPopupOpen, setIsAddedToLibraryPopupOpen] =
+    useState(false);
 
   const isLoggedIn = () => localStorage.getItem("token");
 
@@ -103,7 +148,10 @@ const Home = () => {
           setUserMangaVolume(response.data);
         })
         .catch((error) => {
-          console.error("Erreur lors de la récupération de la bibliothèque utilisateur", error);
+          console.error(
+            "Erreur lors de la récupération de la bibliothèque utilisateur",
+            error
+          );
         });
     }
   }, []);
@@ -112,7 +160,7 @@ const Home = () => {
     axios
       .get("http://localhost:4000/mangaVolume")
       .then((response) => {
-        setMangasVolume(mangasVolume);
+        setMangasVolume(response.data);
       })
       .catch((error) => {
         console.error("Erreur lors de la récupération des mangas: ", error);
@@ -126,7 +174,7 @@ const Home = () => {
       axios
         .post(
           "http://localhost:4000/userMangaVolume",
-          { mangaId: mangaVolumeId }, 
+          { mangaVolumeId: mangaVolumeId },
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -135,8 +183,16 @@ const Home = () => {
         )
         .then((response) => {
           console.log("Manga added:", response.data);
-          const addedMangaVolume = mangasVolume.find(mv => mv.id === mangaVolumeId);
+          const addedMangaVolume = mangasVolume.find(
+            (mv) => mv.id === mangaVolumeId
+          );
           setUserMangaVolume([...userMangaVolume, addedMangaVolume]);
+
+          setIsAddedToLibraryPopupOpen(true);
+
+          setTimeout(() => {
+            setIsAddedToLibraryPopupOpen(false);
+          }, 3000);
         })
         .catch((error) => {
           console.error("Erreur ajout manga:", error);
@@ -145,7 +201,6 @@ const Home = () => {
       navigate("/login");
     }
   };
-  
   useEffect(() => {
     axios
       .get("http://localhost:4000/mangaVolume")
@@ -175,12 +230,22 @@ const Home = () => {
       });
   }, []);
 
+  const showErrorPopup = (message) => {
+    setErrorMessage(message);
+    setIsErrorVisible(true);
+
+    setTimeout(() => {
+      setIsErrorVisible(false);
+      setErrorMessage("");
+    }, 3000);
+  };
+
   return (
     <div className={classes.container}>
       <SearchBar />
-      <h1>Dernières sorties</h1>
+      {/* <MangaCarousel mangasVolume={mangasVolume} /> */}
       <div className={classes.grid}>
-        {mangasVolume.map((mangaVolume) => (
+        {mangasVolume.map((mangaVolume, index) => (
           <div
             key={mangaVolume.id}
             className={classes.mangaVolumeCard}
@@ -201,19 +266,41 @@ const Home = () => {
               </p>
               <p className={classes.mangaTitle}>- {mangaVolume.title}</p>
             </div>
-            <p className={classes.mangaAuthor}>{mangaVolume.Manga.author}</p>
-            <Tooltip title="Ajouter à ma bibliothèque">
-              <MenuBookIcon
-                className={classes.menuBookIcon}
-                onClick={(event) => addToLibrary(event, mangaVolume.id)}
-              />
-            </Tooltip>
+            <p className={classes.mangaAuthor}>
+              {mangaVolume.Manga.author}
+            </p>
+
             <p className={classes.releaseDate}>
               <strong>Sortie le</strong>{" "}
               {new Date(mangaVolume.releaseDate).toLocaleDateString()}
             </p>
+            <Button
+              className={classes.button}
+              onMouseEnter={() => setHoverIndex(index)}
+              onMouseLeave={() => setHoverIndex(null)}
+              onClick={(event) => {
+                event.stopPropagation();
+                addToLibrary(event, mangaVolume.id);
+              }}
+            >
+              {hoverIndex === index ? (
+                "Ajouter"
+              ) : (
+                <MenuBookIcon className={classes.menuBookIcon} />
+              )}
+            </Button>
           </div>
         ))}
+        {isErrorVisible && (
+          <div className={classes.errorPopup}>
+            <p>Manga déjà ajouté</p>
+          </div>
+        )}
+        {isAddedToLibraryPopupOpen && (
+          <div className={classes.successPopup}>
+            Manga ajouté à votre bibliothèque
+          </div>
+        )}
       </div>
       <Footer />
     </div>
