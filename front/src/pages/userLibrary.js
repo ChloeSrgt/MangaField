@@ -1,6 +1,9 @@
-import { makeStyles } from "@mui/styles";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { makeStyles } from "@mui/styles";
+import { Button } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import SearchBar from "../components/searchBar";
 
 const useStyles = makeStyles(() => ({
@@ -16,14 +19,39 @@ const useStyles = makeStyles(() => ({
     width: "80%",
     marginTop: "10px",
   },
+  deleteIcon: {
+    cursor: "pointer",
+    color: "#0097B2",
+    "&:hover": {
+      color: "#007b91",
+    },
+  },
+  button: {
+    color: "#0097B2",
+    borderRadius: "2px solid black",
+    textAlign: "center",
+    transition: "background-color 0.4s, color 0.4s",
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#0097B2 !important",
+      color: "white !important",
+    },
+    contentContainer: {
+      textAlign: "left",
+    },
+    actionContainer: {
+      display: "flex",
+      justifyContent: "flex-end",
+    },
+  },
+
   mangaVolumeCard: {
     position: "relative",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     border: "1px solid #ddd",
     padding: "10px",
-    transition: "transform 0.3s",
     boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
     width: "240px",
     margin: "0 auto",
@@ -56,39 +84,36 @@ const useStyles = makeStyles(() => ({
     color: "#777",
     textAlign: "left",
   },
-  menuBookIcon: {
+  actionContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
     position: "absolute",
     bottom: "10px",
-    right: "10px",
-    cursor: "pointer",
-    color: "#0097B2",
-    "&:hover": {
-      color: "#007b91",
-    },
+    right: "3px",
   },
 }));
 
 const UserLibrary = () => {
   const classes = useStyles();
   const [userMangaVolume, setUserMangaVolume] = useState([]);
+  const [hoverIndex, setHoverIndex] = useState(null);
+  const navigate = useNavigate();
+
+  const handleCardClick = (mangaVolumeId) => {
+    navigate(`/mangaDetails/${mangaVolumeId}`);
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios
       .get("http://localhost:4000/userMangaVolume", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
         setUserMangaVolume(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
-        console.error(
-          "Erreur lors de la récupération de la bibliothèque utilisateur",
-          error
-        );
+        console.error("Error retrieving user library", error);
       });
   }, []);
 
@@ -96,37 +121,32 @@ const UserLibrary = () => {
     const token = localStorage.getItem("token");
     axios
       .delete(`http://localhost:4000/userMangaVolume/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       })
-      .then((response) => {
-        setUserMangaVolume((prevUserMangaVolume) =>
-          prevUserMangaVolume.filter((entry) => entry.id !== id)
-        );
-        console.log(response.data);
+      .then(() => {
+        setUserMangaVolume((prev) => prev.filter((entry) => entry.id !== id));
       })
       .catch((error) => {
-        console.error(
-          "Erreur lors de la suppression du volume de manga",
-          error
-        );
+        console.error("Error deleting manga volume", error);
       });
   };
 
   return (
     <div className={classes.container}>
       <SearchBar />
-      <p>My Manga Collection:</p>
       <div className={classes.grid}>
-        {userMangaVolume.map((data) => (
-          <div key={data.MangaVolume.id} className={classes.mangaVolumeCard}>
+        {userMangaVolume.map((data, index) => (
+          <div
+            key={data.MangaVolume.id}
+            className={classes.mangaVolumeCard}
+            onClick={() => handleCardClick(data.MangaVolume.id)}
+          >
             <img
               src={data.MangaVolume.image}
               alt={data.MangaVolume.title}
               className={classes.mangaVolumeImage}
             />
-            <div>
+            <div className={classes.contentContainer}>
               <p className={classes.mangaVolumeTitle}>
                 {data.MangaVolume.Manga.title}
               </p>
@@ -134,9 +154,20 @@ const UserLibrary = () => {
               <p className={classes.mangaAuthor}>
                 {data.MangaVolume.Manga.author}
               </p>
-              <button onClick={() => handleDeleteMangaVolume(data.id)}>
-                Supprimer
-              </button>
+            </div>
+            <div className={classes.actionContainer}>
+              <Button
+                className={classes.button}
+                onMouseEnter={() => setHoverIndex(index)}
+                onMouseLeave={() => setHoverIndex(null)}
+                onClick={() => handleDeleteMangaVolume(data.id)}
+              >
+                {hoverIndex === index ? (
+                  "Supprimer"
+                ) : (
+                  <DeleteIcon className={classes.deleteIcon} />
+                )}
+              </Button>
             </div>
           </div>
         ))}

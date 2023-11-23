@@ -1,13 +1,15 @@
 import { makeStyles } from "@mui/styles";
 import SearchBar from "../components/searchBar";
-import MangaCarousel from "../components/mangaCarousel";
+// import MangaCarousel from "../components/mangaCarousel";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "../components/footer";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { Button } from "@mui/material";
-import Modal from "react-modal";
+
+// useState : Pour définir un état local dans un composant.
+// useEffect : Pour exécuter du code lors d’un changement d’état.
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -82,15 +84,10 @@ const useStyles = makeStyles(() => ({
     },
   },
   button: {
-    // backgroundColor: "transparent",
     color: "#0097B2",
     borderRadius: "2px solid black",
-    // padding: "8px 18px",
     textAlign: "center",
-    // textDecoration: "none",
     display: "inline-block",
-    // fontSize: "14px",
-    // margin: "4px 2px",
     transition: "background-color 0.4s, color 0.4s",
     cursor: "pointer",
     "&:hover": {
@@ -102,18 +99,18 @@ const useStyles = makeStyles(() => ({
     position: "fixed",
     top: "20px",
     right: "20px",
-    backgroundColor: "red", 
+    backgroundColor: "red",
     color: "white",
     padding: "10px",
     borderRadius: "4px",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
     zIndex: "9999",
-  },  
+  },
   successPopup: {
     position: "fixed",
     top: "10px",
     right: "20px",
-    backgroundColor: "#0097B2",
+    backgroundColor: "#123f55",
     color: "white",
     padding: "10px",
     borderRadius: "4px",
@@ -186,13 +183,21 @@ const Home = () => {
           const addedMangaVolume = mangasVolume.find(
             (mv) => mv.id === mangaVolumeId
           );
-          setUserMangaVolume([...userMangaVolume, addedMangaVolume]);
 
-          setIsAddedToLibraryPopupOpen(true);
+          const isAlreadyAdded = userMangaVolume.some(
+            (mv) => mv.id === mangaVolumeId
+          );
 
-          setTimeout(() => {
-            setIsAddedToLibraryPopupOpen(false);
-          }, 3000);
+          if (isAlreadyAdded) {
+            showErrorPopup("Manga déjà ajouté");
+          } else {
+            setUserMangaVolume([...userMangaVolume, addedMangaVolume]);
+            setIsAddedToLibraryPopupOpen(true);
+
+            setTimeout(() => {
+              setIsAddedToLibraryPopupOpen(false);
+            }, 3000);
+          }
         })
         .catch((error) => {
           console.error("Erreur ajout manga:", error);
@@ -201,6 +206,7 @@ const Home = () => {
       navigate("/login");
     }
   };
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/mangaVolume")
@@ -232,13 +238,32 @@ const Home = () => {
 
   const showErrorPopup = (message) => {
     setErrorMessage(message);
-    setIsErrorVisible(true);
+    setIsErrorVisible(false);
+    console.log("showErrorPopup", showErrorPopup);
 
     setTimeout(() => {
       setIsErrorVisible(false);
       setErrorMessage("");
     }, 3000);
   };
+
+  const renderAddToLibraryButton = (mangaVolume, index) => (
+    <Button
+      className={classes.button}
+      onMouseEnter={() => setHoverIndex(index)}
+      onMouseLeave={() => setHoverIndex(null)}
+      onClick={(event) => {
+        event.stopPropagation();
+        addToLibrary(event, mangaVolume.id);
+      }}
+    >
+      {hoverIndex === index ? (
+        "Ajouter"
+      ) : (
+        <MenuBookIcon className={classes.menuBookIcon} />
+      )}
+    </Button>
+  );
 
   return (
     <div className={classes.container}>
@@ -266,9 +291,7 @@ const Home = () => {
               </p>
               <p className={classes.mangaTitle}>- {mangaVolume.title}</p>
             </div>
-            <p className={classes.mangaAuthor}>
-              {mangaVolume.Manga.author}
-            </p>
+            <p className={classes.mangaAuthor}>{mangaVolume.Manga.author}</p>
 
             <p className={classes.releaseDate}>
               <strong>Sortie le</strong>{" "}

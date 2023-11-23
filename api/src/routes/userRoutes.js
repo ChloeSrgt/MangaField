@@ -28,7 +28,7 @@ router.get("/manga/:mangaId", async (req, res) => {
   try {
     const { mangaId } = req.params;
     const manga = await Manga.findByPk(mangaId, {
-      attributes: ["id", "title", "description", "author", "image"],
+      attributes: ["id", "title", "description", "author", "image", "theme"],
     });
 
     if (!manga) {

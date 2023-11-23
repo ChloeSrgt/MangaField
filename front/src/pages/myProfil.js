@@ -8,52 +8,51 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const useStyles = makeStyles(() => ({
   container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: '#f0f4f7', 
-    minHeight: '100vh',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#f0f4f7",
+    minHeight: "100vh",
   },
   formContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: '40px',
-    padding: '40px',
-    border: 'none',
-    borderRadius: '15px',
-    backgroundColor: '#fff',
-    boxShadow: '0 8px 15px rgba(0,0,0,0.1)', 
-    width: '70%', 
-    transition: 'all 0.3s', 
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginTop: "40px",
+    padding: "40px",
+    border: "none",
+    borderRadius: "15px",
+    backgroundColor: "#fff",
+    boxShadow: "0 8px 15px rgba(0,0,0,0.1)",
+    width: "70%",
+    transition: "all 0.3s",
     "&:hover": {
-      transform: 'scale(1.02)',
-      boxShadow: '0 12px 20px rgba(0,0,0,0.15)',
-    }
+      transform: "scale(1.02)",
+      boxShadow: "0 12px 20px rgba(0,0,0,0.15)",
+    },
   },
   form: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '25px',
-    width: '100%',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    gap: "25px",
+    width: "100%",
+    alignItems: "center",
   },
   input: {
-    width: '90%', 
-    background: '#f6f8fb',
+    width: "90%",
+    background: "#f6f8fb",
     "&:focus": {
-      borderColor: '#2E5BFF', 
-    }
+      borderColor: "#2E5BFF",
+    },
   },
   uploadButton: {
-    marginTop: '15px',
-    backgroundColor: '#2E5BFF', 
+    marginTop: "15px",
+    backgroundColor: "#2E5BFF",
     "&:hover": {
-      backgroundColor: '#2458d1', 
-    }
+      backgroundColor: "#2458d1",
+    },
   },
 }));
-
 
 const MyProfile = () => {
   const classes = useStyles();
@@ -61,8 +60,8 @@ const MyProfile = () => {
     name: "",
     email: "",
     bio: "",
-    address: "", 
-    userName: "", 
+    address: "",
+    userName: "",
     profileImage: null,
   });
   const handleInputChange = (event) => {
@@ -78,10 +77,10 @@ const MyProfile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/getProfile', {
+        const response = await axios.get("http://localhost:4000/getProfile", {
           headers: {
-            'auth-token': localStorage.getItem('token') 
-          }
+            "auth-token": localStorage.getItem("token"),
+          },
         });
         setProfileData({
           name: response.data.name,
@@ -102,23 +101,22 @@ const MyProfile = () => {
     event.preventDefault();
 
     const formData = new FormData();
-    formData.append('name', profileData.name);
-    formData.append('email', profileData.email);
-    formData.append('adress', profileData.adress);
-    formData.append('userName', profileData.userName);
-    formData.append('bio', profileData.bio);
-    
-    if (profileData.profileImage) {
-      formData.append('profileImage', profileData.profileImage);
-    }
-    
-    try {
+    formData.append("name", profileData.name);
+    formData.append("email", profileData.email);
+    formData.append("adress", profileData.adress);
+    formData.append("userName", profileData.userName);
+    formData.append("bio", profileData.bio);
 
-      await axios.put('http://localhost:4000/updateProfile', formData, {
+    if (profileData.profileImage) {
+      formData.append("profileImage", profileData.profileImage);
+    }
+
+    try {
+      await axios.put("http://localhost:4000/updateProfile", formData, {
         headers: {
-          'auth-token': localStorage.getItem('token'), 
-          'Content-Type': 'multipart/form-data' 
-        }
+          "auth-token": localStorage.getItem("token"),
+          "Content-Type": "multipart/form-data",
+        },
       });
     } catch (error) {
       console.error("Erreur lors de la mise à jour du profil", error);
@@ -129,7 +127,7 @@ const MyProfile = () => {
       <SearchBar />
       <div className={classes.formContainer}>
         {profileData.userName && <h3>Hello, {profileData.userName}!</h3>}
-        
+
         <h2>Modifier votre profil</h2>
         <form className={classes.form} onSubmit={handleSubmit}>
           <TextField
@@ -156,7 +154,7 @@ const MyProfile = () => {
           <TextField
             className={classes.input}
             label="userName"
-            name="userName" 
+            name="userName"
             value={profileData.userName}
             onChange={handleInputChange}
           />
@@ -169,11 +167,7 @@ const MyProfile = () => {
             value={profileData.bio}
             onChange={handleInputChange}
           />
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-          />
+          <input type="file" accept="image/*" onChange={handleFileChange} />
           <Button
             className={classes.uploadButton}
             variant="contained"
@@ -188,11 +182,7 @@ const MyProfile = () => {
               onChange={handleFileChange}
             />
           </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-          >
+          <Button type="submit" variant="contained" color="primary">
             Enregistrer
           </Button>
         </form>

@@ -144,11 +144,12 @@ const AllMangas = () => {
         <div className={classes.mangaDetails}>
           <h2 className={classes.title}>{mangaDetails.title}</h2>
           <p className={classes.theme}>
-            <strong>Thème: NIANIANIA {mangaDetails.theme} </strong>
+
+            <strong>Thème: {`${mangaDetails.theme}`} </strong>
           </p>
           <p className={classes.theme}>
-            {" "}
-            <strong>Auteur: {mangaDetails.author}</strong>
+
+            <strong>Auteur: {`${mangaDetails.author}`}</strong>
           </p>
           <p className={classes.description}>{mangaDetails.description}</p>
         </div>
