@@ -114,31 +114,27 @@ const MangaVolumeCard = ({ mangaVolume, onCardClick, actionButton }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.container}>
-      <div className={classes.grid}>
-        <div
-          className={classes.mangaVolumeCard}
-          onClick={() => onCardClick(mangaVolume.id)}
-        >
-          <CardMedia
-            image={mangaVolume.image}
-            title={mangaVolume.title}
-            className={classes.mangaVolumeImage}
-          />
-          <CardContent>
-            <Typography className={classes.mangaVolumeTitle}>
-              {mangaVolume.Manga.title}
-            </Typography>
-            <Typography className={classes.mangaTitle}>
-              - {mangaVolume.title}
-            </Typography>
-            <Typography className={classes.mangaAuthor}>
-              {mangaVolume.Manga.author}
-            </Typography>
-          </CardContent>
-          {actionButton}
-        </div>
-      </div>
+    <div
+      className={classes.mangaVolumeCard}
+      onClick={() => onCardClick(mangaVolume.id)}
+    >
+      <CardMedia
+        image={mangaVolume.image}
+        title={mangaVolume.title}
+        className={classes.mangaVolumeImage}
+      />
+      <CardContent>
+        <Typography className={classes.mangaVolumeTitle}>
+          {mangaVolume.Manga.title}
+        </Typography>
+        <Typography className={classes.mangaTitle}>
+          - {mangaVolume.title}
+        </Typography>
+        <Typography className={classes.mangaAuthor}>
+          {mangaVolume.Manga.author}
+        </Typography>
+      </CardContent>
+      {actionButton}
     </div>
   );
 };

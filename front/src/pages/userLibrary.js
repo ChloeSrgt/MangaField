@@ -117,7 +117,8 @@ const UserLibrary = () => {
       });
   }, []);
 
-  const handleDeleteMangaVolume = (id) => {
+  const handleDeleteMangaVolume = (event, id) => {
+    event.stopPropagation();
     const token = localStorage.getItem("token");
     axios
       .delete(`http://localhost:4000/userMangaVolume/${id}`, {
@@ -160,7 +161,7 @@ const UserLibrary = () => {
                 className={classes.button}
                 onMouseEnter={() => setHoverIndex(index)}
                 onMouseLeave={() => setHoverIndex(null)}
-                onClick={() => handleDeleteMangaVolume(data.id)}
+                onClick={(event) => handleDeleteMangaVolume(event, data.id)}
               >
                 {hoverIndex === index ? (
                   "Supprimer"

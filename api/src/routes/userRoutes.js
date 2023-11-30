@@ -6,6 +6,7 @@ const { verifyToken } = require("../middlewares/authMiddleware");
 const { User } = require("../models");
 const db = require("../models");
 const { Manga, MangaVolume, UserMangaVolume } = require("../models");
+const { Sequelize, Op } = require("sequelize");
 
 router.post("/register", register);
 router.post("/login", login);
@@ -91,6 +92,37 @@ router.get("/mangaVolume", async (req, res) => {
       );
   }
 });
+
+router.get("/mangaVolume/search", async (req, res) => {
+  try {
+    const searchTerm = req.query.term;
+
+    let whereCondition = {};
+    if (searchTerm) {
+      whereCondition = Sequelize.where(
+        Sequelize.fn("concat", Sequelize.col("Manga.title"), ' ', Sequelize.col("MangaVolume.title")),
+        {
+          [Sequelize.Op.iLike]: `%${searchTerm}%`
+        }
+      );
+    }
+
+    const mangaVolumes = await MangaVolume.findAll({
+      where: whereCondition,
+      include: [{
+        model: Manga,
+        attributes: ["title", "author"]
+      }],
+      attributes: ["id", "title", "description", "releaseDate", "image", "mangaId"]
+    });
+
+    res.json(mangaVolumes);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur lors de la recherche des volumes de manga: " + err.message);
+  }
+});
+
 
 router.get("/mangaVolume/:mangaVolumeId", async (req, res) => {
   try {
