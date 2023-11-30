@@ -1,13 +1,16 @@
 import { makeStyles } from "@mui/styles";
 import SearchBar from "../components/searchBar";
-import MangaCarousel from "../components/mangaCarousel";
+// import MangaCarousel from "../components/mangaCarousel";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "../components/footer";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { Button } from "@mui/material";
-import Modal from "react-modal";
+
+// useState : Pour définir un état local dans un composant.
+// useEffect : Pour exécuter du code lors d’un changement d’état.
+// debounce
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -82,15 +85,10 @@ const useStyles = makeStyles(() => ({
     },
   },
   button: {
-    // backgroundColor: "transparent",
     color: "#0097B2",
     borderRadius: "2px solid black",
-    // padding: "8px 18px",
     textAlign: "center",
-    // textDecoration: "none",
     display: "inline-block",
-    // fontSize: "14px",
-    // margin: "4px 2px",
     transition: "background-color 0.4s, color 0.4s",
     cursor: "pointer",
     "&:hover": {
@@ -100,20 +98,20 @@ const useStyles = makeStyles(() => ({
   },
   errorPopup: {
     position: "fixed",
-    top: "20px",
-    right: "20px",
-    backgroundColor: "red", 
+    // top: "20px",
+    // right: "20px",
+    backgroundColor: "#8B0000",
     color: "white",
-    padding: "10px",
+    padding: "5px",
     borderRadius: "4px",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
     zIndex: "9999",
-  },  
+  },
   successPopup: {
     position: "fixed",
-    top: "10px",
-    right: "20px",
-    backgroundColor: "#0097B2",
+    // top: "10px",
+    // right: "20px",
+    backgroundColor: "#123f55",
     color: "white",
     padding: "10px",
     borderRadius: "4px",
@@ -169,38 +167,55 @@ const Home = () => {
 
   const addToLibrary = (event, mangaVolumeId) => {
     event.stopPropagation();
-    if (isLoggedIn()) {
-      const token = localStorage.getItem("token");
-      axios
-        .post(
-          "http://localhost:4000/userMangaVolume",
-          { mangaVolumeId: mangaVolumeId },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((response) => {
-          console.log("Manga added:", response.data);
-          const addedMangaVolume = mangasVolume.find(
-            (mv) => mv.id === mangaVolumeId
-          );
-          setUserMangaVolume([...userMangaVolume, addedMangaVolume]);
-
-          setIsAddedToLibraryPopupOpen(true);
-
-          setTimeout(() => {
-            setIsAddedToLibraryPopupOpen(false);
-          }, 3000);
-        })
-        .catch((error) => {
-          console.error("Erreur ajout manga:", error);
-        });
-    } else {
+    if (!isLoggedIn()) {
       navigate("/login");
+      return;
     }
+
+    const isAlreadyAdded = userMangaVolume.some(
+      (mv) => mv.id === mangaVolumeId
+    );
+    if (isAlreadyAdded) {
+      showErrorPopup("Manga déjà ajouté");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    axios
+      .post(
+        "http://localhost:4000/userMangaVolume",
+        { mangaVolumeId },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((response) => {
+        const addedMangaVolume = mangasVolume.find(
+          (mv) => mv.id === mangaVolumeId
+        );
+        setUserMangaVolume([...userMangaVolume, addedMangaVolume]);
+        setIsAddedToLibraryPopupOpen(true);
+        setTimeout(() => {
+          setIsAddedToLibraryPopupOpen(false);
+        }, 3000);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 400) {
+          showErrorPopup("Manga déjà ajouté");
+        } else {
+          console.error("Erreur ajout manga:", error);
+        }
+      });
   };
+
+  const showErrorPopup = (message) => {
+    setErrorMessage(message);
+    setIsErrorVisible(true);
+
+    setTimeout(() => {
+      setIsErrorVisible(false);
+      setErrorMessage("");
+    }, 3000);
+  };
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/mangaVolume")
@@ -230,16 +245,6 @@ const Home = () => {
       });
   }, []);
 
-  const showErrorPopup = (message) => {
-    setErrorMessage(message);
-    setIsErrorVisible(true);
-
-    setTimeout(() => {
-      setIsErrorVisible(false);
-      setErrorMessage("");
-    }, 3000);
-  };
-
   return (
     <div className={classes.container}>
       <SearchBar />
@@ -266,9 +271,7 @@ const Home = () => {
               </p>
               <p className={classes.mangaTitle}>- {mangaVolume.title}</p>
             </div>
-            <p className={classes.mangaAuthor}>
-              {mangaVolume.Manga.author}
-            </p>
+            <p className={classes.mangaAuthor}>{mangaVolume.Manga.author}</p>
 
             <p className={classes.releaseDate}>
               <strong>Sortie le</strong>{" "}

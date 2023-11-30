@@ -20,14 +20,14 @@ const App = () => {
   const isLoggedIn = () => {
     return localStorage.getItem("token") ? true : false;
   };
-  
+
   return (
     <Router>
       <Routes>
         <Route path="/libraryMap" element={<LibraryMap />} />
-
+        <Route path="/mangaDetails/:id" element={<MangaDetails />} />
         <Route path="/myProfil" element={<MyProfil />} />
-
+        <Route path="/mangaDetail/:id" element={MangaDetails} />
         <Route path="/userLibrary" element={<UserLibrary />} />
         <Route path="/mangaVolume/:id" element={<MangaDetails />} />
         <Route path="/manga/:mangaId" element={<AllMangas />} />
@@ -42,10 +42,7 @@ const App = () => {
           }
         />
 
-        <Route
-          path="/home"
-          element={<Home /> }
-        />
+        <Route path="/home" element={<Home />} />
 
         <Route
           path="/login"

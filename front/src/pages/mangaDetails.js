@@ -1,9 +1,9 @@
 import { makeStyles } from "@mui/styles";
 import SearchBar from "../components/searchBar";
 import React, { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -84,15 +84,71 @@ const useStyles = makeStyles(() => ({
       color: "#0097B2",
     },
   },
+  errorPopup: {
+    backgroundColor: "#FF6B6B",
+    color: "#FFF",
+    padding: "10px",
+    borderRadius: "5px",
+    marginTop: "10px",
+    textAlign: "center",
+  },
+  successPopup: {
+    backgroundColor: "#123f55",
+    color: "#FFF",
+    padding: "10px",
+    borderRadius: "5px",
+    marginTop: "10px",
+    textAlign: "center",
+  },
 }));
 
 const MangaDetails = () => {
   const classes = useStyles();
   const { id } = useParams();
   const [mangaDetails, setMangaDetails] = useState(null);
+  const navigate = useNavigate();
+  const [isErrorVisible, setIsErrorVisible] = useState(false);
+  const [isAddedToLibraryPopupOpen, setIsAddedToLibraryPopupOpen] =
+    useState(false);
 
-  const handleUserMangaVolume = () => {
-    Navigate("/userMangaVolume");
+  const isLoggedIn = () => {
+    return localStorage.getItem("token") !== null;
+  };
+
+  const addToUserLibrary = () => {
+    if (isLoggedIn()) {
+      const token = localStorage.getItem("token");
+      axios
+        .post(
+          "http://localhost:4000/userLibrary",
+          { mangaId: mangaDetails.mangaId },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          setIsAddedToLibraryPopupOpen(true);
+
+          setTimeout(() => {
+            setIsAddedToLibraryPopupOpen(false);
+          }, 3000);
+        })
+        .catch((error) => {
+          showErrorPopup("Manga déjà ajouté");
+        });
+    } else {
+      navigate("/login");
+    }
+  };
+
+  const showErrorPopup = (message) => {
+    setIsErrorVisible(true);
+
+    setTimeout(() => {
+      setIsErrorVisible(false);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -101,7 +157,7 @@ const MangaDetails = () => {
     });
   }, [id]);
 
-  if (!mangaDetails) return <div>ça charge</div>;
+  if (!mangaDetails) return <div>Loading...</div>;
 
   return (
     <div className={classes.container}>
@@ -123,8 +179,15 @@ const MangaDetails = () => {
             {` - ${mangaDetails.title}`}
           </h2>
           <div className={classes.buttonContainer}>
-            <button className={classes.button} onClick={handleUserMangaVolume}>Ajouter à ma collection</button>
-            <button className={classes.button} >Trouver ma librairie</button>
+            <button className={classes.button} onClick={addToUserLibrary}>
+              Ajouter à ma collection
+            </button>
+            <button
+              className={classes.button}
+              onClick={() => navigate("/libraryMap")}
+            >
+              Trouver ma librairie
+            </button>
           </div>
         </div>
       </div>
@@ -142,8 +205,18 @@ const MangaDetails = () => {
           </p>
         </div>
       </div>
+      {isErrorVisible && (
+        <div className={classes.errorPopup}>
+          <p>Manga déjà ajouté</p>
+        </div>
+      )}
+      {isAddedToLibraryPopupOpen && (
+        <div className={classes.successPopup}>
+          Manga ajouté à votre bibliothèque
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default MangaDetails;

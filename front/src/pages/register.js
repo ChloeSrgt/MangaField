@@ -73,7 +73,7 @@ const Register = () => {
           required
           fullWidth
           label="userName"
-          name="userName" 
+          name="userName"
           value={formData.userName}
           onChange={handleChange}
         />
