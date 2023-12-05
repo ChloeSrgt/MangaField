@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   header: {
     display: "flex",
     width: "100%",
-    justifyContent: "flex-start",
+    justifyContent: "space-between", 
     alignItems: "center",
     padding: "10px 30px",
     backgroundColor: "#067790",
@@ -43,9 +43,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   logo: {
-    height: "100%",
-    width: "auto",
-    margin: "20px",
+    height: "auto",
+    width: "200px",
     transition: "transform 0.3s",
     "&:hover": {
       transform: "scale(1.05)",
@@ -63,7 +62,6 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     borderRadius: "19px",
     backgroundColor: "#f1f3f4",
-    margin: "0",
     width: "100%",
   },
   searchIconWrapper: {
