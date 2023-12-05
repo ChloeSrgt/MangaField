@@ -14,13 +14,14 @@ module.exports = (sequelize, DataTypes) => {
       Manga.hasMany(models.MangaVolume, { foreignKey: 'mangaId' });
     }
   }
-  
+
   Manga.init({
     title: DataTypes.STRING,
     theme: DataTypes.STRING,
     description: DataTypes.STRING,
     author: DataTypes.STRING,
-    image: DataTypes.STRING
+    image: DataTypes.STRING,
+    status: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Manga',

@@ -21,19 +21,19 @@ const useStyles = makeStyles(() => ({
   },
   deleteIcon: {
     cursor: "pointer",
-    color: "#0097B2",
+    color: "#067790",
     "&:hover": {
       color: "#007b91",
     },
   },
   button: {
-    color: "#0097B2",
+    color: "#067790",
     borderRadius: "2px solid black",
     textAlign: "center",
     transition: "background-color 0.4s, color 0.4s",
     cursor: "pointer",
     "&:hover": {
-      backgroundColor: "#0097B2 !important",
+      backgroundColor: "#067790 !important",
       color: "white !important",
     },
     contentContainer: {
