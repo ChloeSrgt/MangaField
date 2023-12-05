@@ -29,7 +29,7 @@ router.get("/manga/:mangaId", async (req, res) => {
   try {
     const { mangaId } = req.params;
     const manga = await Manga.findByPk(mangaId, {
-      attributes: ["id", "title", "description", "author", "image", "theme"],
+      attributes: ["id", "title", "description", "author", "image", "theme", "status"],
     });
 
     if (!manga) {
@@ -54,7 +54,7 @@ router.get("/mangaVolume/:mangaId/volumes", async (req, res) => {
       where: { mangaId },
       include: {
         model: Manga,
-        attributes: ["title", "author", "theme", "description", "image"],
+        attributes: ["title", "author", "theme", "description", "image", "status"],
       },
     });
     res.json(volumes);
@@ -138,7 +138,7 @@ router.get("/mangaVolume/:mangaVolumeId", async (req, res) => {
       ],
       include: {
         model: Manga,
-        attributes: ["title", "author", "theme"],
+        attributes: ["title", "author", "theme", "status"],
       },
     });
 

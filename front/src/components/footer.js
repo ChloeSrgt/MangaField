@@ -11,7 +11,7 @@ const useStyles = makeStyles({
     flex: 1,
   },
   footer: {
-    backgroundColor: "#0097B2",
+    backgroundColor: "#067790",
     color: "white",
     fontFamily: "Arial, sans-serif",
     textAlign: "center",
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 const Footer = () => {
   const classes = useStyles();
 
-  return <div className={classes.footer}>© MangaField</div>;
+  return <div className={classes.footer}>© MangaShield</div>;
 };
 
 export default Footer;

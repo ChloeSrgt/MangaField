@@ -466,6 +466,16 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
+          mangaId: 3,
+          title: "tome 106",
+          image: "https://assets.bubblebd.com/img/r4vjda1y2e/0i84syv5bf.jpg",
+          description:
+            "Parvenu sur l’île futuriste d’Egg Head, l’équipage de Chapeau de paille découvre le laboratoire du docteur Végapunk ainsi qu’une multitude de technologies inconnues qui stimulent le goût de Luffy pour l’exploration ! Mais voilà que le CP-0 fait irruption dans le but de supprimer le génial inventeur ! Les aventures de Luffy à la poursuite du One Piece continuent !",
+          releaseDate: new Date("2023-12-06"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
           mangaId: 4,
           title: "tome 26",
           image: "https://assets.bubblebd.com/img/hstb6n8h40/pxsf4a11o3.jpg",
@@ -932,6 +942,56 @@ module.exports = {
           description:
             "Bien que toujours en proie aux souvenirs de son passé et rongé par le remord des violences qu'il faisait subir à son ex petit ami Yumi, Kannosuke Hayashida a finalement accepté les sentiments amoureux de son collègue de travail Ayuma Shuuna avec qui il avait débuté une relation uniquement basée sur le sexe. C'est alors que Ayuma est transféré à Osaka pour une mission de deux ans. Commence ainsi une relation longue distance entre les deux hommes.",
           releaseDate: new Date("2021-06-25"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 16,
+          title: "tome 1",
+          image: "https://assets.bubblebd.com/img/hrp0ddazly/406cxu5tvx.jpg",
+          description:
+            "Les grands affrontements dans le monde des ninjas appartiennent désormais au passé. Le village de Konoha est entré dans une ère de paix. Boruto, le fils du 7e Hokage, vit mal d'être dans l'ombre de son imminent paternel. Il ne se doute pas qu'une nouvelle menace plane sur eux... La légende de la nouvelle génération commence maintenant !",
+          releaseDate: new Date("2017-03-03"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 16,
+          title: "tome 18",
+          image: "https://assets.bubblebd.com/img/tfby2dpqbw/f5mzp6c9dx.jpg",
+          description:
+            "Après un combat intense et violent avec Code, Boruto ressuscite miraculeusement. Au village de Konoha, les dispositions à prendre pour la suite sont au coeur du sujet... C'est alors que Code en personne apparaît devant Shikamaru et Amado ! Shikamaru va-t-il mettre à exécution un plan secret...?! Le village est de nouveau sous tension !",
+          releaseDate: new Date("2023-11-24"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 17,
+          title: "tome 1",
+          image: "https://assets.bubblebd.com/img/23pmskd62j/dyuvyrxh9y.jpg",
+          description:
+            "À 26 ans, Takemichi a le sentiment d'avoir déjà raté sa vie. Vivotant de petits boulots ingrats tout juste bons à payer le loyer d'un studio miteux, il se lamente sur le désert de sa vie amoureuse lorsqu'il apprend la mort de Hinata, la seule petite amie qu'il ait eue... La jeune fille et son frère ont été les victimes collatérales d'un règlement de comptes entre les membres d'un gigantesque gang, le Tokyo Manji-kai. Encore sous le choc, Takemichi est à son tour victime d'un accident qui le ramène inexplicablement 12 ans en arrière, lorsqu'il était au collège et se donnait des airs de mauvais garçon. Et si c'était pour lui l'occasion de sauver Hinata ?",
+          releaseDate: new Date("2019-04-17"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 17,
+          title: "tome 27",
+          image: "https://assets.bubblebd.com/img/til8etuanr/tiow84g7xf.jpg",
+          description:
+            "La guerre est déclarée entre le Toman et le Tenjiku, et le combat s’annonce fratricide à tous les égards. Mais alors que Takemichi se prépare à l’affrontement, la fourberie de Tetta Kisaki s’illustre par une nouvelle tragédie qui frappe de plein fouet le Tokyo Manjikai, laissant hagard le clan entier. Cet événement serait-il à l’origine de la descente aux enfers de Mikey ?",
+          releaseDate: new Date("2023-11-08"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          mangaId: 17,
+          title: "tome 28",
+          image: "https://assets.bubblebd.com/img/6igvzf4j3v/jq3quhyayt.jpg",
+          description:
+            "La guerre est déclarée entre le Toman et le Tenjiku, et le combat s’annonce fratricide à tous les égards. Mais alors que Takemichi se prépare à l’affrontement, la fourberie de Tetta Kisaki s’illustre par une nouvelle tragédie qui frappe de plein fouet le Tokyo Manjikai, laissant hagard le clan entier. Cet événement serait-il à l’origine de la descente aux enfers de Mikey ?",
+          releaseDate: new Date("2023-01-17"),
           createdAt: new Date(),
           updatedAt: new Date(),
         },

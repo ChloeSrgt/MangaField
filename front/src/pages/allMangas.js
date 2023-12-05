@@ -14,20 +14,20 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
   },
   button: {
-    color: "#0097B2",
+    color: "#067790",
     borderRadius: "2px solid black",
     textAlign: "center",
     display: "inline-block",
     transition: "background-color 0.4s, color 0.4s",
     cursor: "pointer",
     "&:hover": {
-      backgroundColor: "#0097B2 !important",
+      backgroundColor: "#067790 !important",
       color: "white !important",
     },
   },
   menuBookIcon: {
     cursor: "pointer",
-    color: "#0097B2",
+    color: "#067790",
     "&:hover": {
       color: "#007b91",
     },
@@ -58,9 +58,9 @@ const useStyles = makeStyles(() => ({
     marginLeft: "20px",
   },
   title: {
-    fontSize: "24px",
+    fontSize: "37px",
     fontWeight: "bold",
-    marginTop: "50px",
+    marginTop: "30px",
     marginBottom: "10px",
   },
   description: {
@@ -69,11 +69,6 @@ const useStyles = makeStyles(() => ({
   },
   theme: {
     fontSize: "16px",
-  },
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
   },
   grid: {
     display: "grid",
@@ -151,6 +146,29 @@ const useStyles = makeStyles(() => ({
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
     zIndex: "9999",
   },
+  volumeCount: {
+    fontSize: "18px",
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: "10px",
+  },
+  statusBox: {
+    display: "inline-block",
+    padding: "8px 16px",
+    margin: "5px",
+    borderRadius: "20px",
+    backgroundColor: "#067790",
+    color: "white",
+    fontSize: "11px",
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+  },
+  flexContainer: {
+    display: "flex",
+    alignItems: "center", 
+    justifyContent: "space-between", 
+  },
 }));
 
 const AllMangas = () => {
@@ -163,8 +181,9 @@ const AllMangas = () => {
   const [userMangaVolumes, setUserMangaVolumes] = useState([]);
   const [isErrorVisible, setIsErrorVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [volumeCount, setVolumeCount] = useState(0);
   const [isAddedToLibraryPopupOpen, setIsAddedToLibraryPopupOpen] =
-  useState(false);
+    useState(false);
 
   useEffect(() => {
     axios.get(`http://localhost:4000/manga/${mangaId}`).then((response) => {
@@ -175,41 +194,47 @@ const AllMangas = () => {
       .get(`http://localhost:4000/mangaVolume/${mangaId}/volumes`)
       .then((response) => {
         setMangaVolumes(response.data);
+        const highestVolumeNumber = Math.max(
+          ...response.data.map((volume) => parseInt(volume.title.split(" ")[1]))
+        );
+        setVolumeCount(highestVolumeNumber);
       });
   }, [mangaId]);
 
   const addToLibrary = (event, mangaVolumeId) => {
     event.stopPropagation();
-  
-    const isAlreadyAdded = userMangaVolumes.some(mv => mv.id === mangaVolumeId);
+
+    const isAlreadyAdded = userMangaVolumes.some(
+      (mv) => mv.id === mangaVolumeId
+    );
     if (isAlreadyAdded) {
       showErrorPopup("Manga déjà ajouté");
       return;
     }
-  
+
     const token = localStorage.getItem("token");
-    axios.post(
-      "http://localhost:4000/userMangaVolume",
-      { mangaVolumeId },
-      { headers: { Authorization: `Bearer ${token}` } }
-    )
-    .then(response => {
-      setUserMangaVolumes([...userMangaVolumes, response.data]);
-      setIsAddedToLibraryPopupOpen(true); 
-  
-      setTimeout(() => {
-        setIsAddedToLibraryPopupOpen(false); 
-      }, 3000);
-    })
-    .catch(error => {
-      if (error.response && error.response.status === 400) {
-        showErrorPopup("Manga déjà ajouté");
-      } else {
-        console.error("Erreur ajout manga:", error);
-      }
-    });
+    axios
+      .post(
+        "http://localhost:4000/userMangaVolume",
+        { mangaVolumeId },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((response) => {
+        setUserMangaVolumes([...userMangaVolumes, response.data]);
+        setIsAddedToLibraryPopupOpen(true);
+
+        setTimeout(() => {
+          setIsAddedToLibraryPopupOpen(false);
+        }, 3000);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 400) {
+          showErrorPopup("Manga déjà ajouté");
+        } else {
+          console.error("Erreur ajout manga:", error);
+        }
+      });
   };
-  
 
   const showErrorPopup = (message) => {
     setErrorMessage(message);
@@ -221,10 +246,10 @@ const AllMangas = () => {
     }, 32000);
   };
 
-
   if (!mangaDetails) return <div>Chargement...</div>;
 
   const firstVolumeImage = mangaVolumes.length > 0 ? mangaVolumes[0].image : "";
+  const reversedMangaVolumes = [...mangaVolumes].reverse();
 
   return (
     <div className={classes.container}>
@@ -236,20 +261,25 @@ const AllMangas = () => {
           className={classes.tomeImage}
         />
         <div className={classes.mangaDetails}>
+          <div>
+            <p className={classes.statusBox}>{mangaDetails.status}</p>
+            <p className={classes.statusBox}>{volumeCount} Tomes</p>
+          </div>
           <h2 className={classes.title}>{mangaDetails.title}</h2>
+
           <p className={classes.theme}>
             <strong>Thème: {`${mangaDetails.theme}`} </strong>
           </p>
+          <p className={classes.description}>{mangaDetails.description}</p>
           <p className={classes.theme}>
             <strong>Auteur: {`${mangaDetails.author}`}</strong>
           </p>
-          <p className={classes.description}>{mangaDetails.description}</p>
         </div>
       </div>
 
       <hr className={classes.separator} />
       <div className={classes.grid}>
-        {mangaVolumes.map((mangaVolume, index) => (
+        {reversedMangaVolumes.map((mangaVolume, index) => (
           <div
             key={mangaVolume.id}
             className={classes.mangaVolumeCard}
@@ -284,7 +314,7 @@ const AllMangas = () => {
             </Button>
           </div>
         ))}
-      {isErrorVisible && (
+        {isErrorVisible && (
           <div className={classes.errorPopup}>
             <p>Manga déjà ajouté</p>
           </div>

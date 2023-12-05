@@ -16,7 +16,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#0097B2",
+      main: "#067790",
     },
   },
 });
@@ -61,7 +61,7 @@ const Login = () => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "#0097B2" }}>
+          <Avatar sx={{ m: 1, bgcolor: "#067790" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">

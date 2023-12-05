@@ -44,7 +44,7 @@ const useStyles = makeStyles(() => ({
     backgroundColor: "#ffffff",
   },
   mangaImage: {
-    width: "300px",
+    width: "400px",
     marginRight: "20px",
     borderRadius: "10px",
     boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
@@ -81,7 +81,7 @@ const useStyles = makeStyles(() => ({
     textDecoration: "underline",
     color: "black",
     "&:hover": {
-      color: "#0097B2",
+      color: "#067790",
     },
   },
   errorPopup: {
@@ -100,55 +100,38 @@ const useStyles = makeStyles(() => ({
     marginTop: "10px",
     textAlign: "center",
   },
+  volumeCount: {
+    fontSize: "18px",
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: "10px",
+  },
+  statusBox: {
+    display: "inline-block",
+    padding: "8px 16px",
+    margin: "8px",
+    borderRadius: "20px",
+    backgroundColor: "#067790",
+    color: "white",
+    fontSize: "11px",
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+  },
 }));
 
 const MangaDetails = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const [mangaDetails, setMangaDetails] = useState(null);
   const navigate = useNavigate();
+  const [mangaDetails, setMangaDetails] = useState(null);
   const [isErrorVisible, setIsErrorVisible] = useState(false);
   const [isAddedToLibraryPopupOpen, setIsAddedToLibraryPopupOpen] =
     useState(false);
+  const [totalVolumes, setTotalVolumes] = useState(0);
 
   const isLoggedIn = () => {
     return localStorage.getItem("token") !== null;
-  };
-
-  const addToUserLibrary = () => {
-    if (isLoggedIn()) {
-      const token = localStorage.getItem("token");
-      axios
-        .post(
-          "http://localhost:4000/userLibrary",
-          { mangaId: mangaDetails.mangaId },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((response) => {
-          setIsAddedToLibraryPopupOpen(true);
-
-          setTimeout(() => {
-            setIsAddedToLibraryPopupOpen(false);
-          }, 3000);
-        })
-        .catch((error) => {
-          showErrorPopup("Manga déjà ajouté");
-        });
-    } else {
-      navigate("/login");
-    }
-  };
-
-  const showErrorPopup = (message) => {
-    setIsErrorVisible(true);
-
-    setTimeout(() => {
-      setIsErrorVisible(false);
-    }, 3000);
   };
 
   useEffect(() => {
@@ -156,8 +139,47 @@ const MangaDetails = () => {
       setMangaDetails(response.data);
     });
   }, [id]);
+  
+  useEffect(() => {
+    if (mangaDetails) {
+      axios.get(`http://localhost:4000/mangaVolume/${mangaDetails.mangaId}/volumes`).then((response) => {
+        const highestVolume = Math.max(...response.data.map(volume => parseInt(volume.title.split(" ")[1])));
+        setTotalVolumes(highestVolume);
+      });
+    }
+  }, [mangaDetails]);
+  
+  const addToLibrary = () => {
+    if (!isLoggedIn()) {
+      navigate("/login");
+      return;
+    }
 
-  if (!mangaDetails) return <div>Loading...</div>;
+    const token = localStorage.getItem("token");
+    axios
+      .post(
+        "http://localhost:4000/userMangaVolume",
+        { mangaVolumeId: id },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((response) => {
+        setIsAddedToLibraryPopupOpen(true);
+        setTimeout(() => {
+          setIsAddedToLibraryPopupOpen(false);
+        }, 1000);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de l'ajout du manga:", error);
+        setIsErrorVisible(true);
+        setTimeout(() => {
+          setIsErrorVisible(false);
+        }, 1000);
+      });
+  };
+
+  if (!mangaDetails || totalVolumes === 0) return <div>Chargement...</div>;
+
+  const currentVolumeNumber = parseInt(mangaDetails.title.split(" ")[1]);
 
   return (
     <div className={classes.container}>
@@ -169,6 +191,10 @@ const MangaDetails = () => {
           className={classes.mangaImage}
         />
         <div className={classes.mangaDetails}>
+        <div> 
+          <p className={classes.statusBox}>{mangaDetails.Manga.status}</p>
+          <p className={classes.statusBox}>{`Tome ${currentVolumeNumber} / ${totalVolumes}`}</p>
+        </div>
           <h2 className={classes.title}>
             <Link
               to={`/manga/${mangaDetails.mangaId}`}
@@ -176,10 +202,11 @@ const MangaDetails = () => {
             >
               {mangaDetails.Manga.title}
             </Link>
+
             {` - ${mangaDetails.title}`}
           </h2>
           <div className={classes.buttonContainer}>
-            <button className={classes.button} onClick={addToUserLibrary}>
+            <button className={classes.button} onClick={addToLibrary}>
               Ajouter à ma collection
             </button>
             <button

@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-start",
     alignItems: "center",
     padding: "10px 30px",
-    backgroundColor: "#0097B2",
+    backgroundColor: "#067790",
     height: "45px",
   },
   searchResultsContainer: {
