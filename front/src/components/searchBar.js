@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       transform: "scale(1.05)",
     },
+    paddingRight: "10px",
   },
   searchWrapper: {
     flex: 1,
