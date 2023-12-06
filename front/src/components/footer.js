@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 const Footer = () => {
   const classes = useStyles();
 
-  return <div className={classes.footer}>© MangaShield</div>;
+  return <div className={classes.footer}>© MangaField</div>;
 };
 
 export default Footer;
