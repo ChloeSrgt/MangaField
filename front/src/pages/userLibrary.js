@@ -5,6 +5,7 @@ import { makeStyles } from "@mui/styles";
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchBar from "../components/searchBar";
+import Footer from "../components/footer";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -18,6 +19,17 @@ const useStyles = makeStyles(() => ({
     gap: "20px",
     width: "80%",
     marginTop: "10px",
+    "@media (max-width: 1200px)": {
+      gridTemplateColumns: "repeat(3, 1fr)",
+    },
+    "@media (max-width: 768px)": {
+      gridTemplateColumns: "repeat(2, 1fr)",
+      width: "90%",
+    },
+    "@media (max-width: 480px)": {
+      gridTemplateColumns: "1fr",
+      gap: "10px",
+    },
   },
   deleteIcon: {
     cursor: "pointer",
@@ -44,7 +56,6 @@ const useStyles = makeStyles(() => ({
       justifyContent: "flex-end",
     },
   },
-
   mangaVolumeCard: {
     position: "relative",
     display: "flex",
@@ -55,13 +66,23 @@ const useStyles = makeStyles(() => ({
     boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
     width: "240px",
     margin: "0 auto",
+    "@media (max-width: 1200px)": {
+      width: "200px",
+    },
+    "@media (max-width: 768px)": {
+      width: "150px",
+    },
+    "@media (max-width: 480px)": {
+      width: "100%",
+      padding: "5px",
+    },
     "&:hover": {
       transform: "scale(1.05)",
     },
   },
   mangaVolumeImage: {
-    width: "280px",
-    height: "350px",
+    width: "100%",
+    height: "auto",
     borderRadius: "8px",
     objectFit: "contain",
     alignSelf: "center",

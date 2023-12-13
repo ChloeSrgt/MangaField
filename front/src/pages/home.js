@@ -1,126 +1,147 @@
-import { makeStyles } from "@mui/styles";
-import SearchBar from "../components/searchBar";
-// import MangaCarousel from "../components/mangaCarousel";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { makeStyles } from "@mui/styles";
+import SearchBar from "../components/searchBar";
 import Footer from "../components/footer";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { Button } from "@mui/material";
-
-// useState : Pour définir un état local dans un composant.
-// useEffect : Pour exécuter du code lors d’un changement d’état.
-// debounce
-
-const useStyles = makeStyles(() => ({
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(5, minmax(100px, 1fr))",
-    gap: "20px",
-    width: "80%",
-    marginTop: "10px",
-  },
-  mangaVolumeCard: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    border: "1px solid #ddd",
-    padding: "10px",
-    transition: "transform 0.3s",
-    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-    width: "240px",
-    margin: "0 auto",
-    "&:hover": {
-      transform: "scale(1.05)",
-    },
-  },
-  releaseDate: {
-    position: "absolute",
-    top: "1px",
-    left: "15px",
-    backgroundColor: "rgba(295, 255, 255, 0.7)",
-    padding: "4px 4px",
-    borderRadius: "4px",
-    fontSize: "11px",
-    zIndex: 1,
-  },
-  mangaVolumeImage: {
-    width: "280px",
-    height: "350px",
-    borderRadius: "8px",
-    objectFit: "contain",
-    alignSelf: "center",
-  },
-  mangaVolumeTitle: {
-    fontSize: "15px",
-    display: "inline-block",
-    alignItems: "flex-start",
-    marginRight: "5px",
-    marginBottom: "5px",
-    fontWeight: "bold",
-  },
-  mangaTitle: {
-    fontSize: "15px",
-    display: "inline-block",
-    marginBottom: "5px",
-    color: "grey",
-  },
-  mangaAuthor: {
-    fontSize: "13px",
-    color: "#777",
-    textAlign: "left",
-    fontWeight: "bold",
-  },
-  menuBookIcon: {
-    cursor: "pointer",
-    color: "#067790",
-    "&:hover": {
-      color: "#007b91",
-    },
-  },
-  button: {
-    color: "#067790",
-    borderRadius: "2px solid black",
-    textAlign: "center",
-    display: "inline-block",
-    transition: "background-color 0.4s, color 0.4s",
-    cursor: "pointer",
-    "&:hover": {
-      backgroundColor: "#067790 !important",
-      color: "white !important",
-    },
-  },
-  errorPopup: {
-    position: "fixed",
-    // top: "20px",
-    // right: "20px",
-    backgroundColor: "#8B0000",
-    color: "white",
-    padding: "5px",
-    borderRadius: "4px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-    zIndex: "9999",
-  },
-  successPopup: {
-    position: "fixed",
-    // top: "10px",
-    // right: "20px",
-    backgroundColor: "#123f55",
-    color: "white",
-    padding: "10px",
-    borderRadius: "4px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-    zIndex: "9999",
-  },
-}));
+import { DarkModeContext } from "../App";
 
 const Home = () => {
+  const { darkMode } = useContext(DarkModeContext);
+  const useStyles = makeStyles(() => ({
+    container: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    grid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(5, minmax(100px, 1fr))",
+      gap: "20px",
+      width: "80%",
+      marginTop: "50px",
+      "@media (max-width: 1200px)": {
+        gridTemplateColumns: "repeat(3, minmax(100px, 1fr))",
+      },
+      "@media (max-width: 768px)": {
+        gridTemplateColumns: "repeat(2, minmax(100px, 1fr))",
+        width: "90%",
+      },
+      "@media (max-width: 480px)": {
+        gridTemplateColumns: "1fr",
+        gap: "10px",
+      },
+    },
+    mangaVolumeCard: {
+      backgroundColor: darkMode ? "#151414" : "white",
+      position: "relative",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "flex-start",
+      border: darkMode ? "1px solid #1b373d" : "1px solid #ddd",
+      padding: "10px",
+      transition: "transform 0.3s",
+      boxShadow: darkMode ? "0 4px 8px rgba(155,155,155,0.2)" : "0 4px 8px rgba(0,0,0,0.1)",
+      width: "240px",
+      margin: "0 auto",
+      "&:hover": {
+        transform: "scale(1.05)",
+      },
+      "@media (max-width: 768px)": {
+        width: "200px",
+      },
+      "@media (max-width: 480px)": {
+        width: "100%",
+      },
+    },
+    releaseDate: {
+      position: "absolute",
+      top: "1px",
+      left: "15px",
+      backgroundColor: "rgba(295, 255, 255, 0.7)",
+      padding: "4px 4px",
+      borderRadius: "4px",
+      fontSize: "11px",
+      zIndex: 1,
+    },
+    mangaVolumeImage: {
+      width: "280px",
+      height: "350px",
+      borderRadius: "8px",
+      objectFit: "contain",
+      alignSelf: "center",
+      "@media (max-width: 768px)": {
+        width: "200px",
+        height: "250px",
+      },
+      "@media (max-width: 480px)": {
+        width: "100%",
+        height: "auto",
+      },
+    },
+    mangaVolumeTitle: {
+      fontSize: "15px",
+      display: "inline-block",
+      alignItems: "flex-start",
+      marginRight: "5px",
+      marginBottom: "5px",
+      fontWeight: "bold",
+      color: darkMode ? "white" : "black",
+    },
+    mangaTitle: {
+      fontSize: "15px",
+      display: "inline-block",
+      marginBottom: "5px",
+      color: "grey",
+      color: darkMode ? "white" : "black",
+    },
+    mangaAuthor: {
+      fontSize: "13px",
+      color: "#777",
+      textAlign: "left",
+      fontWeight: "bold",
+    },
+    menuBookIcon: {
+      cursor: "pointer",
+      color: "#067790",
+      "&:hover": {
+        color: "#007b91",
+      },
+    },
+    button: {
+      color: "#067790",
+      borderRadius: "2px solid black",
+      textAlign: "center",
+      display: "inline-block",
+      transition: "background-color 0.4s, color 0.4s",
+      cursor: "pointer",
+      "&:hover": {
+        backgroundColor: "#067790 !important",
+        color: "white !important",
+      },
+    },
+    errorPopup: {
+      position: "fixed",
+      backgroundColor: "#8B0000",
+      color: "white",
+      padding: "5px",
+      borderRadius: "4px",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+      zIndex: "9999",
+    },
+    successPopup: {
+      position: "fixed",
+      backgroundColor: "#123f55",
+      color: "white",
+      padding: "10px",
+      borderRadius: "4px",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+      zIndex: "9999",
+    },
+  }));
+
   const classes = useStyles();
   const [mangasVolume, setMangasVolume] = useState([]);
   const navigate = useNavigate();
@@ -168,7 +189,7 @@ const Home = () => {
   const addToLibrary = (event, mangaVolumeId) => {
     event.stopPropagation();
     if (!isLoggedIn()) {
-      navigate("/login");
+      showErrorPopup("Vous devez être connecté");
       return;
     }
 
@@ -213,9 +234,8 @@ const Home = () => {
     setTimeout(() => {
       setIsErrorVisible(false);
       setErrorMessage("");
-    }, 1000);
+    }, 1500);
   };
-
   useEffect(() => {
     axios
       .get("http://localhost:4000/mangaVolume")
@@ -254,11 +274,7 @@ const Home = () => {
           <div
             key={mangaVolume.id}
             className={classes.mangaVolumeCard}
-            onClick={() =>
-              isLoggedIn()
-                ? navigate(`/mangaVolume/${mangaVolume.id}`)
-                : navigate("/login")
-            }
+            onClick={() => navigate(`/mangaVolume/${mangaVolume.id}`)}
           >
             <img
               src={mangaVolume.image}
@@ -296,7 +312,7 @@ const Home = () => {
         ))}
         {isErrorVisible && (
           <div className={classes.errorPopup}>
-            <p>Manga déjà ajouté</p>
+            <p>{errorMessage}</p>
           </div>
         )}
         {isAddedToLibraryPopupOpen && (
@@ -305,7 +321,6 @@ const Home = () => {
           </div>
         )}
       </div>
-      <Footer />
     </div>
   );
 };

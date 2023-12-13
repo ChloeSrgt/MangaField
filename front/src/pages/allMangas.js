@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { makeStyles } from "@mui/styles";
@@ -6,172 +6,204 @@ import SearchBar from "../components/searchBar";
 import { Button } from "@mui/material";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import Footer from "../components/footer";
-
-const useStyles = makeStyles(() => ({
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  button: {
-    color: "#067790",
-    borderRadius: "2px solid black",
-    textAlign: "center",
-    display: "inline-block",
-    transition: "background-color 0.4s, color 0.4s",
-    cursor: "pointer",
-    "&:hover": {
-      backgroundColor: "#067790 !important",
-      color: "white !important",
-    },
-  },
-  menuBookIcon: {
-    cursor: "pointer",
-    color: "#067790",
-    "&:hover": {
-      color: "#007b91",
-    },
-  },
-  mangaDetailsContainer: {
-    display: "flex",
-    width: "80%",
-    marginTop: "20px",
-    marginBottom: "20px",
-  },
-  tomeImage: {
-    flex: 1,
-    maxWidth: "300px",
-    borderRadius: "10px",
-    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-  },
-  separator: {
-    width: "100%",
-    height: "2px",
-    background: "#333",
-    margin: "20px 0",
-  },
-  mangaDetails: {
-    flex: 2,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    marginLeft: "20px",
-  },
-  title: {
-    fontSize: "37px",
-    fontWeight: "bold",
-    marginTop: "30px",
-    marginBottom: "10px",
-  },
-  description: {
-    fontSize: "16px",
-    marginBottom: "10px",
-  },
-  theme: {
-    fontSize: "16px",
-  },
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(5, minmax(100px, 1fr))",
-    gap: "20px",
-    width: "80%",
-    marginTop: "10px",
-  },
-  mangaVolumeCard: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    border: "1px solid #ddd",
-    padding: "10px",
-    transition: "transform 0.3s",
-    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-    width: "240px",
-    margin: "0 auto",
-    "&:hover": {
-      transform: "scale(1.05)",
-    },
-  },
-  releaseDate: {
-    position: "absolute",
-    top: "4px",
-    left: "15px",
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
-    padding: "4px 4px",
-    borderRadius: "4px",
-    fontSize: "11px",
-    zIndex: 1,
-  },
-
-  mangaVolumeImage: {
-    borderRadius: "8px",
-    objectFit: "cover",
-  },
-  mangaVolumeTitle: {
-    fontSize: "15px",
-    display: "inline-block",
-    marginRight: "5px",
-    marginBottom: "5px",
-  },
-  mangaTitle: {
-    fontSize: "15px",
-    display: "inline-block",
-    marginBottom: "5px",
-    color: "grey",
-  },
-  mangaAuthor: {
-    fontSize: "13px",
-    color: "#777",
-    textAlign: "left",
-  },
-  errorPopup: {
-    position: "fixed",
-    // top: "20px",
-    // right: "20px",
-    backgroundColor: "#8B0000",
-    color: "white",
-    padding: "5px",
-    borderRadius: "4px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-    zIndex: "9999",
-  },
-  successPopup: {
-    position: "fixed",
-    // top: "10px",
-    // right: "20px",
-    backgroundColor: "#123f55",
-    color: "white",
-    padding: "10px",
-    borderRadius: "4px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-    zIndex: "9999",
-  },
-  volumeCount: {
-    fontSize: "18px",
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: "10px",
-  },
-  statusBox: {
-    display: "inline-block",
-    padding: "8px 16px",
-    margin: "5px",
-    borderRadius: "20px",
-    backgroundColor: "#067790",
-    color: "white",
-    fontSize: "11px",
-    fontWeight: "bold",
-    textTransform: "uppercase",
-    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
-  },
-  flexContainer: {
-    display: "flex",
-    alignItems: "center", 
-    justifyContent: "space-between", 
-  },
-}));
+import { DarkModeContext } from "../App";
 
 const AllMangas = () => {
+  const { darkMode } = useContext(DarkModeContext);
+  const useStyles = makeStyles(() => ({
+    container: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    button: {
+      color: "#067790",
+      borderRadius: "2px solid black",
+      textAlign: "center",
+      display: "inline-block",
+      transition: "background-color 0.4s, color 0.4s",
+      cursor: "pointer",
+      "&:hover": {
+        backgroundColor: "#067790 !important",
+        color: "white !important",
+      },
+    },
+    menuBookIcon: {
+      cursor: "pointer",
+      color: "#067790",
+      "&:hover": {
+        color: "#007b91",
+      },
+    },
+    mangaDetailsContainer: {
+      display: "flex",
+      width: "80%",
+      marginTop: "20px",
+      marginBottom: "20px",
+      "@media (max-width: 768px)": {
+        flexDirection: "column",
+        alignItems: "center",
+        width: "90%",
+      },
+    },
+    tomeImage: {
+      flex: 1,
+      maxWidth: "300px",
+      borderRadius: "10px",
+      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+      "@media (max-width: 768px)": {
+        maxWidth: "100%",
+      },
+    },
+    separator: {
+      width: "100%",
+      height: "2px",
+      background: "#333",
+      margin: "20px 0",
+    },
+    mangaDetails: {
+      flex: 2,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "flex-start",
+      marginLeft: "20px",
+      "@media (max-width: 768px)": {
+        alignItems: "center",
+        marginLeft: "0",
+        textAlign: "center",
+      },
+    },
+    title: {
+      fontSize: "37px",
+      fontWeight: "bold",
+      marginTop: "30px",
+      marginBottom: "10px",
+    },
+    description: {
+      fontSize: "16px",
+      marginBottom: "10px",
+    },
+    theme: {
+      fontSize: "16px",
+    },
+    grid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(5, minmax(100px, 1fr))",
+      gap: "20px",
+      width: "80%",
+      marginTop: "10px",
+      "@media (max-width: 1200px)": {
+        gridTemplateColumns: "repeat(3, 1fr)",
+      },
+      "@media (max-width: 768px)": {
+        gridTemplateColumns: "repeat(2, 1fr)",
+      },
+      "@media (max-width: 480px)": {
+        gridTemplateColumns: "1fr",
+      },
+    },
+    mangaVolumeCard: {
+      backgroundColor: darkMode ? "#151414" : "white",
+      position: "relative",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "flex-start",
+      border: "1px solid #ddd",
+      padding: "10px",
+      transition: "transform 0.3s",
+      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+      width: "240px",
+      margin: "0 auto",
+      "@media (max-width: 1024px)": {
+        width: "300px",
+      },
+      "@media (max-width: 768px)": {
+        width: "350px",
+      },
+      "@media (max-width: 375px)": {
+        width: "100%",
+        padding: "5px",
+      },
+      "&:hover": {
+        transform: "scale(1.05)",
+      },
+    },
+    releaseDate: {
+      position: "absolute",
+      top: "4px",
+      left: "15px",
+      backgroundColor: "rgba(255, 255, 255, 0.7)",
+      padding: "4px 4px",
+      borderRadius: "4px",
+      fontSize: "11px",
+      zIndex: 1,
+    },
+
+    mangaVolumeImage: {
+      borderRadius: "8px",
+      objectFit: "cover",
+    },
+    mangaVolumeTitle: {
+      fontSize: "15px",
+      display: "inline-block",
+      marginRight: "5px",
+      marginBottom: "5px",
+      color: darkMode ? "white" : "black",
+    },
+    mangaTitle: {
+      fontSize: "15px",
+      display: "inline-block",
+      marginBottom: "5px",
+      color: darkMode ? "white" : "black",
+    },
+    mangaAuthor: {
+      fontSize: "13px",
+      color: "#777",
+      textAlign: "left",
+    },
+    errorPopup: {
+      position: "fixed",
+      backgroundColor: "#8B0000",
+      color: "white",
+      padding: "5px",
+      borderRadius: "4px",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+      zIndex: "9999",
+    },
+    successPopup: {
+      position: "fixed",
+      backgroundColor: "#123f55",
+      color: "white",
+      padding: "10px",
+      borderRadius: "4px",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+      zIndex: "9999",
+    },
+    volumeCount: {
+      fontSize: "18px",
+      fontWeight: "bold",
+      color: "#333",
+      marginBottom: "10px",
+    },
+    statusBox: {
+      display: "inline-block",
+      padding: "8px 16px",
+      margin: "5px",
+      borderRadius: "20px",
+      backgroundColor: "#067790",
+      color: "white",
+      fontSize: "11px",
+      fontWeight: "bold",
+      textTransform: "uppercase",
+      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+    },
+    flexContainer: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+    },
+  }));
+
   const { mangaId } = useParams();
   const classes = useStyles();
   const navigate = useNavigate();
@@ -184,6 +216,8 @@ const AllMangas = () => {
   const [volumeCount, setVolumeCount] = useState(0);
   const [isAddedToLibraryPopupOpen, setIsAddedToLibraryPopupOpen] =
     useState(false);
+
+  const isLoggedIn = () => localStorage.getItem("token");
 
   useEffect(() => {
     axios.get(`http://localhost:4000/manga/${mangaId}`).then((response) => {
@@ -203,6 +237,10 @@ const AllMangas = () => {
 
   const addToLibrary = (event, mangaVolumeId) => {
     event.stopPropagation();
+    if (!isLoggedIn()) {
+      showErrorPopup("Vous devez être connecté");
+      return;
+    }
 
     const isAlreadyAdded = userMangaVolumes.some(
       (mv) => mv.id === mangaVolumeId
@@ -243,7 +281,7 @@ const AllMangas = () => {
     setTimeout(() => {
       setIsErrorVisible(false);
       setErrorMessage("");
-    }, 32000);
+    }, 1500);
   };
 
   if (!mangaDetails) return <div>Chargement...</div>;
@@ -316,7 +354,7 @@ const AllMangas = () => {
         ))}
         {isErrorVisible && (
           <div className={classes.errorPopup}>
-            <p>Manga déjà ajouté</p>
+            <p>{errorMessage}</p>
           </div>
         )}
         {isAddedToLibraryPopupOpen && (
@@ -325,7 +363,6 @@ const AllMangas = () => {
           </div>
         )}
       </div>
-      <Footer />
     </div>
   );
 };

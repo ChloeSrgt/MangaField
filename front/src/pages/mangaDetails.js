@@ -4,123 +4,158 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-
-const useStyles = makeStyles(() => ({
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    fontFamily: "Arial, sans-serif",
-  },
-  buttonContainer: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "start",
-    gap: "20px",
-    marginLeft: "20px",
-    marginTop: "50px",
-  },
-  button: {
-    padding: "10px 20px",
-    borderRadius: "10px",
-    border: "none",
-    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-    cursor: "pointer",
-    fontSize: "13px",
-    fontWeight: "bold",
-    transition: "background-color 0.3s",
-
-    "&:hover": {
-      backgroundColor: "#f5f5f5",
-    },
-  },
-  detailsContainer: {
-    display: "flex",
-    padding: "20px",
-    borderRadius: "10px",
-    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-    width: "80%",
-    marginTop: "20px",
-    backgroundColor: "#ffffff",
-  },
-  mangaImage: {
-    width: "400px",
-    marginRight: "20px",
-    borderRadius: "10px",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-  },
-  mangaDetails: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  title: {
-    fontSize: "24px",
-    fontWeight: "bold",
-    marginTop: "50px",
-  },
-  description: {
-    marginBottom: "15px",
-  },
-  lowerSection: {
-    display: "flex",
-    justifyContent: "space-between",
-    width: "80%",
-    marginTop: "20px",
-  },
-  descriptionSection: {
-    flex: 2,
-  },
-  infoSection: {
-    flex: 1,
-    padding: "20px",
-    borderRadius: "10px",
-    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-    marginLeft: "20px",
-  },
-  titleLink: {
-    textDecoration: "underline",
-    color: "black",
-    "&:hover": {
-      color: "#067790",
-    },
-  },
-  errorPopup: {
-    backgroundColor: "#FF6B6B",
-    color: "#FFF",
-    padding: "10px",
-    borderRadius: "5px",
-    marginTop: "10px",
-    textAlign: "center",
-  },
-  successPopup: {
-    backgroundColor: "#123f55",
-    color: "#FFF",
-    padding: "10px",
-    borderRadius: "5px",
-    marginTop: "10px",
-    textAlign: "center",
-  },
-  volumeCount: {
-    fontSize: "18px",
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: "10px",
-  },
-  statusBox: {
-    display: "inline-block",
-    padding: "8px 16px",
-    margin: "8px",
-    borderRadius: "20px",
-    backgroundColor: "#067790",
-    color: "white",
-    fontSize: "11px",
-    fontWeight: "bold",
-    textTransform: "uppercase",
-    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
-  },
-}));
+import Footer from "../components/footer";
 
 const MangaDetails = () => {
+  const useStyles = makeStyles(() => ({
+    container: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      fontFamily: "'Roboto', sans-serif",
+    },
+    buttonContainer: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "start",
+      gap: "20px",
+      marginLeft: "20px",
+      marginTop: "50px",
+      "@media (max-width: 768px)": {
+        marginLeft: "0",
+        alignItems: "center",
+      },
+    },
+    button: {
+      padding: "10px 20px",
+      borderRadius: "10px",
+      border: "none",
+      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+      cursor: "pointer",
+      fontSize: "13px",
+      fontWeight: "bold",
+      transition: "background-color 0.3s",
+
+      "&:hover": {
+        backgroundColor: "#f5f5f5",
+      },
+    },
+    detailsContainer: {
+      display: "flex",
+      padding: "20px",
+      borderRadius: "10px",
+      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+      width: "80%",
+      marginTop: "20px",
+      backgroundColor: "#ffffff",
+      flexDirection: "row",
+      "@media (max-width: 768px)": {
+        flexDirection: "column",
+        alignItems: "center",
+        width: "90%",
+      },
+    },
+    mangaImage: {
+      width: "400px",
+      marginRight: "20px",
+      borderRadius: "10px",
+      boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+      "@media (max-width: 768px)": {
+        width: "300px",
+        marginRight: "0",
+        marginBottom: "20px",
+      },
+    },
+    mangaDetails: {
+      display: "flex",
+      flexDirection: "column",
+    },
+    title: {
+      fontSize: "24px",
+      fontWeight: "bold",
+      marginTop: "50px",
+    },
+    description: {
+      marginBottom: "15px",
+    },
+    lowerSection: {
+      display: "flex",
+      justifyContent: "space-between",
+      width: "80%",
+      marginTop: "20px",
+      "@media (max-width: 768px)": {
+        flexDirection: "column",
+        alignItems: "center",
+      },
+    },
+    descriptionSection: {
+      backgroundColor: "white",
+      borderRadius: "10px",
+      padding: "20px",
+      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+      flex: 2,
+      "@media (max-width: 768px)": {
+        order: 2,
+      },
+    },
+    infoSection: {
+      backgroundColor: "white",
+      flex: 1,
+      padding: "20px",
+      borderRadius: "10px",
+      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+      marginLeft: "20px",
+      "@media (max-width: 768px)": {
+        marginLeft: "0",
+        marginTop: "20px",
+        order: 1,
+      },
+    },
+    titleLink: {
+      textDecoration: "underline",
+      color: "black",
+      "&:hover": {
+        color: "#067790",
+      },
+    },
+    errorPopup: {
+      position: "fixed",
+      backgroundColor: "#8B0000",
+      color: "white",
+      padding: "5px",
+      borderRadius: "4px",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+      zIndex: "9999",
+    },
+    successPopup: {
+      position: "fixed",
+      backgroundColor: "#123f55",
+      color: "white",
+      padding: "10px",
+      borderRadius: "4px",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+      zIndex: "9999",
+    },
+    volumeCount: {
+      fontSize: "18px",
+      fontWeight: "bold",
+      color: "#333",
+      marginBottom: "10px",
+    },
+    statusBox: {
+      display: "inline-block",
+      padding: "8px 16px",
+      margin: "8px",
+      borderRadius: "20px",
+      backgroundColor: "#067790",
+      color: "white",
+      fontSize: "11px",
+      fontWeight: "bold",
+      textTransform: "uppercase",
+      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+    },
+  }));
+
   const classes = useStyles();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -139,19 +174,27 @@ const MangaDetails = () => {
       setMangaDetails(response.data);
     });
   }, [id]);
-  
+
   useEffect(() => {
     if (mangaDetails) {
-      axios.get(`http://localhost:4000/mangaVolume/${mangaDetails.mangaId}/volumes`).then((response) => {
-        const highestVolume = Math.max(...response.data.map(volume => parseInt(volume.title.split(" ")[1])));
-        setTotalVolumes(highestVolume);
-      });
+      axios
+        .get(
+          `http://localhost:4000/mangaVolume/${mangaDetails.mangaId}/volumes`
+        )
+        .then((response) => {
+          const highestVolume = Math.max(
+            ...response.data.map((volume) =>
+              parseInt(volume.title.split(" ")[1])
+            )
+          );
+          setTotalVolumes(highestVolume);
+        });
     }
   }, [mangaDetails]);
-  
+
   const addToLibrary = () => {
     if (!isLoggedIn()) {
-      navigate("/login");
+      showErrorPopup("Vous devez être connecté");
       return;
     }
 
@@ -176,6 +219,22 @@ const MangaDetails = () => {
         }, 1000);
       });
   };
+  const handleFindLibrary = () => {
+    if (!isLoggedIn()) {
+      showErrorPopup("Vous devez être connecté");
+      return;
+    }
+
+    navigate("/libraryMap");
+  };
+
+  const showErrorPopup = (message) => {
+    setIsErrorVisible(true);
+
+    setTimeout(() => {
+      setIsErrorVisible(false);
+    }, 1500);
+  };
 
   if (!mangaDetails || totalVolumes === 0) return <div>Chargement...</div>;
 
@@ -191,10 +250,12 @@ const MangaDetails = () => {
           className={classes.mangaImage}
         />
         <div className={classes.mangaDetails}>
-        <div> 
-          <p className={classes.statusBox}>{mangaDetails.Manga.status}</p>
-          <p className={classes.statusBox}>{`Tome ${currentVolumeNumber} / ${totalVolumes}`}</p>
-        </div>
+          <div>
+            <p className={classes.statusBox}>{mangaDetails.Manga.status}</p>
+            <p
+              className={classes.statusBox}
+            >{`Tome ${currentVolumeNumber} / ${totalVolumes}`}</p>
+          </div>
           <h2 className={classes.title}>
             <Link
               to={`/manga/${mangaDetails.mangaId}`}
@@ -206,15 +267,16 @@ const MangaDetails = () => {
             {` - ${mangaDetails.title}`}
           </h2>
           <div className={classes.buttonContainer}>
-            <button className={classes.button} onClick={addToLibrary}>
-              Ajouter à ma collection
-            </button>
-            <button
-              className={classes.button}
-              onClick={() => navigate("/libraryMap")}
-            >
-              Trouver ma librairie
-            </button>
+            {isLoggedIn() && (
+              <>
+                <button className={classes.button} onClick={addToLibrary}>
+                  Ajouter à ma collection
+                </button>
+                <button className={classes.button} onClick={handleFindLibrary}>
+                  Trouver ma librairie
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

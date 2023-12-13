@@ -16,5 +16,8 @@
     "pg": "^8.11.3",
     "postgres": "^3.3.5",
     "sequelize": "^6.33.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
