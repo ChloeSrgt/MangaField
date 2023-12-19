@@ -995,6 +995,16 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          mangaId: 18,
+          title: "tome 35",
+          image: "https://assets.bubblebd.com/img/bmo56d4gf3/m6c00g0cs6.jpg",
+          description:
+            "Yuno et Langris affrontent Zenon, le dernier membre de la Triade Sombre. Grâce à leur travail d'équipe, ils parviennent à le mettre en difficulté, mais ce dernier se relève plus fort que jamais. La situation semble alors désespérée... jusqu'à l'arrivée d'un renfort inattendu ! Tandis que le passé de Zenon et le secret de Yuno refont surface, le combat acharné entre ces deux adversaires que tout oppose atteint son paroxysme !",
+          releaseDate: new Date("2023-12-06"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );

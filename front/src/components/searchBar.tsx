@@ -1,46 +1,63 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router";
-import { InputBase } from "@mui/material";
+import { InputBase, Menu, MenuItem } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import logo from "../assets/logo.png";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
+import logo from "../assets/logo.png";
+
+interface MangaVolume {
+  id: string;
+  title: string;
+  image: string;
+  Manga: {
+    title: string;
+  };
+}
 
 const useStyles = makeStyles((theme) => ({
   header: {
     display: "flex",
-    width: "100%",
-    justifyContent: "space-between", 
+    justifyContent: "center",
     alignItems: "center",
     padding: "10px 30px",
     backgroundColor: "#067790",
     height: "45px",
+    width: "100%",
   },
   searchResultsContainer: {
     position: "absolute",
-    top: "5%",
-    // left: 0,
-    // right: 0,
-    zIndex: 1000,
-    backgroundColor: "white",
-    boxShadow: "0px 4px 8px rgba(0,0,0,0.1)",
-    maxHeight: "300px",
+    top: "9%", 
+    left: "50%",
+    transform: "translateX(-50%)", 
+    backgroundColor: "#fff",
+    boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+    borderRadius: "8px",
+    width: "auto",
+    maxWidth: "400px", 
+    maxHeight: "400px",
     overflowY: "auto",
-    borderRadius: "4px",
-    width: "25%",
-    marginLeft: "37.5%",
+    zIndex: 1000,
   },
   searchResultItem: {
-    padding: "10px 20px",
-    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    padding: "10px 15px",
     borderBottom: "1px solid #f0f0f0",
+    transition: "background-color 0.3s",
     "&:hover": {
-      backgroundColor: "#f9f9f9",
+      backgroundColor: "#f7f7f7",
     },
+  },
+  searchResultItemImage: {
+    marginRight: "10px",
+    width: "60px",
+    height: "90px",
+    objectFit: "cover",
+    borderRadius: "4px",
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
   },
   logo: {
     height: "auto",
@@ -49,21 +66,29 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       transform: "scale(1.05)",
     },
-    paddingRight: "10px",
   },
   searchWrapper: {
     flex: 1,
     display: "flex",
     justifyContent: "center",
+    width: "100%", 
   },
   searchContainer: {
-    width: "25%",
+    display: "flex",
+    justifyContent: "center",
+    width: "30%", 
+    "@media (max-width: 768px)": {
+      width: "80%", 
+    },
+    "@media (max-width: 480px)": {
+      width: "95%", 
+    },
   },
   search: {
     position: "relative",
     borderRadius: "19px",
     backgroundColor: "#f1f3f4",
-    width: "100%",
+    width: "100%", 
   },
   searchIconWrapper: {
     width: "40px",
@@ -95,14 +120,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SearchBar = () => {
+const SearchBar: React.FC = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchResults, setSearchResults] = useState<MangaVolume[]>([]);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleSearchChange = (event) => {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      searchContainerRef.current &&
+      !searchContainerRef.current.contains(event.target as Node)
+    ) {
+      setSearchResults([]);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
@@ -114,9 +156,9 @@ const SearchBar = () => {
     }
   }, [searchTerm]);
 
-  const searchMangaVolumes = async (term) => {
+  const searchMangaVolumes = async (term: string) => {
     try {
-      const response = await axios.get(
+      const response = await axios.get<MangaVolume[]>(
         `http://localhost:4000/mangaVolume/search?term=${term}`
       );
       setSearchResults(response.data);
@@ -126,13 +168,17 @@ const SearchBar = () => {
     }
   };
 
-  const handleMenuOpen = (event) => {
-    // Si l'utilisateur n'est pas connecté, pas le menu
-    if (isLoggedIn()) {
-      setAnchorEl(event.currentTarget);
-    }
+  const handleLoginRedirect = () => {
+    navigate("/login");
   };
 
+  const handleMenuOpen = (event: React.MouseEvent<SVGSVGElement>) => {
+    if (isLoggedIn()) {
+      const target = event.currentTarget as unknown as HTMLElement;
+      setAnchorEl(target);
+    }
+  };
+  
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
@@ -140,9 +186,8 @@ const SearchBar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     handleMenuClose();
-    navigate("/login");
   };
-
+  
   const handleProfile = () => {
     navigate("/myProfil");
     handleMenuClose();
@@ -164,13 +209,13 @@ const SearchBar = () => {
     return localStorage.getItem("token") ? true : false;
   };
 
-  const handleSearchResultClick = (mangaVolumeId) => {
+  const handleSearchResultClick = (mangaVolumeId: string) => {
     navigate(`/mangaDetails/${mangaVolumeId}`);
     setSearchResults([]);
   };
-
+  
   return (
-    <header className={classes.header}>
+    <header className={classes.header} ref={searchContainerRef}>
       <img
         src={logo}
         alt="Logo"
@@ -200,14 +245,35 @@ const SearchBar = () => {
             className={classes.searchResultItem}
             onClick={() => handleSearchResultClick(mangaVolume.id)}
           >
-            {mangaVolume.Manga.title} - {mangaVolume.title}
+            <img
+              src={mangaVolume.image}
+              alt={`${mangaVolume.Manga.title} cover`}
+              className={classes.searchResultItemImage}
+            />
+            <span>
+              {mangaVolume.Manga.title} - {mangaVolume.title}
+            </span>
           </div>
         ))}
       </div>
+
       <div className={classes.iconContainer}>
-        <MenuBookIcon className={classes.icon} onClick={handleUserLibrary} />
-        {isLoggedIn() && (
-          <PermIdentityIcon className={classes.icon} onClick={handleMenuOpen} />
+      {isLoggedIn() ? (
+          <>
+            <MenuBookIcon
+              className={classes.icon}
+              onClick={handleUserLibrary}
+            />
+            <PermIdentityIcon
+              className={classes.icon}
+              onClick={handleMenuOpen}
+            />
+          </>
+        ) : (
+          <PermIdentityIcon
+            className={classes.icon}
+            onClick={handleLoginRedirect}
+          />
         )}
         <Menu
           anchorEl={anchorEl}

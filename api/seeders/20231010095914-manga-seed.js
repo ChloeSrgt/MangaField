@@ -210,6 +210,18 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          id: 18,
+          title: "Black Clover",
+          image: "https://assets.bubblebd.com/img/dqg39kswhz/c2n4biq153.jpg",
+          description:
+            "Dans un monde régi par la magie, Yuno et Asta ont grandi ensemble avec un seul but en tête : devenir le prochain Empereur-Mage du royaume de Clover. Mais si le premier est naturellement doué, le deuxième, quant à lui, ne sait pas manipuler la magie. C'est ainsi que lors de la cérémonie d'attribution de leur grimoire, Yuno reçoit le légendaire grimoire au trèfle à quatre feuilles tandis qu'Asta, lui, repart bredouille. Or plus tard, un ancien et mystérieux ouvrage noir décoré d'un trèfle à cinq feuilles surgit devant lui ! Un grimoire d'anti-magie...",
+          author: "Yûki Tabata",
+          theme: "Récit d'aventure, Fantasy",
+          status: "En cours",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );
