@@ -35,9 +35,8 @@ const MangaDetails = () => {
       fontSize: "13px",
       fontWeight: "bold",
       transition: "background-color 0.3s",
-
       "&:hover": {
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "#067790",
       },
     },
     detailsContainer: {
@@ -60,10 +59,14 @@ const MangaDetails = () => {
       marginRight: "20px",
       borderRadius: "10px",
       boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+      transition: "transform 0.3s ease-in-out",
       "@media (max-width: 768px)": {
         width: "300px",
         marginRight: "0",
         marginBottom: "20px",
+      },
+      "&:hover": {
+        transform: "scale(1.05)",
       },
     },
     mangaDetails: {
@@ -125,7 +128,12 @@ const MangaDetails = () => {
       padding: "5px",
       borderRadius: "4px",
       boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-      zIndex: "9999",
+      zIndex: 9999,
+      opacity: 0,
+      transition: "opacity 0.3s ease-in-out",
+      "&.visible": {
+        opacity: 1,
+      },
     },
     successPopup: {
       position: "fixed",
@@ -134,7 +142,12 @@ const MangaDetails = () => {
       padding: "10px",
       borderRadius: "4px",
       boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-      zIndex: "9999",
+      zIndex: 9999,
+      opacity: 0,
+      transition: "opacity 0.3s ease-in-out",
+      "&.visible": {
+        opacity: 1,
+      },
     },
     volumeCount: {
       fontSize: "18px",
@@ -159,16 +172,16 @@ const MangaDetails = () => {
   const classes = useStyles();
   const { id } = useParams();
   const navigate = useNavigate();
-  const [mangaDetails, setMangaDetails] = useState(null);
+  const [mangaDetails, setMangaDetails] = useState<any | null>(null);
   const [isErrorVisible, setIsErrorVisible] = useState(false);
   const [isAddedToLibraryPopupOpen, setIsAddedToLibraryPopupOpen] =
     useState(false);
-  const [totalVolumes, setTotalVolumes] = useState(0);
+
+  const [totalVolumes, setTotalVolumes] = useState<number>(0);
 
   const isLoggedIn = () => {
     return localStorage.getItem("token") !== null;
   };
-
   useEffect(() => {
     axios.get(`http://localhost:4000/mangaVolume/${id}`).then((response) => {
       setMangaDetails(response.data);
@@ -183,7 +196,7 @@ const MangaDetails = () => {
         )
         .then((response) => {
           const highestVolume = Math.max(
-            ...response.data.map((volume) =>
+            ...response.data.map((volume: any) =>
               parseInt(volume.title.split(" ")[1])
             )
           );
@@ -228,9 +241,8 @@ const MangaDetails = () => {
     navigate("/libraryMap");
   };
 
-  const showErrorPopup = (message) => {
+  const showErrorPopup = (message: string) => {
     setIsErrorVisible(true);
-
     setTimeout(() => {
       setIsErrorVisible(false);
     }, 1500);
@@ -295,12 +307,13 @@ const MangaDetails = () => {
         </div>
       </div>
       {isErrorVisible && (
-        <div className={classes.errorPopup}>
+        <div className={`${classes.errorPopup} visible`}>
           <p>Manga déjà ajouté</p>
         </div>
       )}
+
       {isAddedToLibraryPopupOpen && (
-        <div className={classes.successPopup}>
+        <div className={`${classes.successPopup} visible`}>
           Manga ajouté à votre bibliothèque
         </div>
       )}

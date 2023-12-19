@@ -8,6 +8,15 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import axios from "axios";
 import logo from "../assets/logo.png";
 
+interface MangaVolume {
+  id: string;
+  title: string;
+  image: string;
+  Manga: {
+    title: string;
+  };
+}
+
 const useStyles = makeStyles((theme) => ({
   header: {
     display: "flex",
@@ -111,18 +120,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SearchBar = () => {
+const SearchBar: React.FC = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const searchContainerRef = useRef(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchResults, setSearchResults] = useState<MangaVolume[]>([]);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = (event) => {
+  const handleClickOutside = (event: MouseEvent) => {
     if (
       searchContainerRef.current &&
-      !searchContainerRef.current.contains(event.target)
+      !searchContainerRef.current.contains(event.target as Node)
     ) {
       setSearchResults([]);
     }
@@ -135,7 +144,7 @@ const SearchBar = () => {
     };
   }, []);
 
-  const handleSearchChange = (event) => {
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
@@ -147,9 +156,9 @@ const SearchBar = () => {
     }
   }, [searchTerm]);
 
-  const searchMangaVolumes = async (term) => {
+  const searchMangaVolumes = async (term: string) => {
     try {
-      const response = await axios.get(
+      const response = await axios.get<MangaVolume[]>(
         `http://localhost:4000/mangaVolume/search?term=${term}`
       );
       setSearchResults(response.data);
@@ -163,13 +172,13 @@ const SearchBar = () => {
     navigate("/login");
   };
 
-  const handleMenuOpen = (event) => {
-    // Si l'utilisateur n'est pas connecté, pas le menu
+  const handleMenuOpen = (event: React.MouseEvent<SVGSVGElement>) => {
     if (isLoggedIn()) {
-      setAnchorEl(event.currentTarget);
+      const target = event.currentTarget as unknown as HTMLElement;
+      setAnchorEl(target);
     }
   };
-
+  
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
@@ -200,11 +209,11 @@ const SearchBar = () => {
     return localStorage.getItem("token") ? true : false;
   };
 
-  const handleSearchResultClick = (mangaVolumeId) => {
+  const handleSearchResultClick = (mangaVolumeId: string) => {
     navigate(`/mangaDetails/${mangaVolumeId}`);
     setSearchResults([]);
   };
-
+  
   return (
     <header className={classes.header} ref={searchContainerRef}>
       <img

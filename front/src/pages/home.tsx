@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { makeStyles } from "@mui/styles";
@@ -8,7 +8,18 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { Button } from "@mui/material";
 import { DarkModeContext } from "../App";
 
-const Home = () => {
+interface MangaVolume {
+  id: string;
+  title: string;
+  image: string;
+  Manga: {
+    title: string;
+    author: string;
+  };
+  releaseDate: string;
+}
+
+const Home: React.FC = () => {
   const { darkMode } = useContext(DarkModeContext);
   const useStyles = makeStyles(() => ({
     container: {
@@ -94,8 +105,7 @@ const Home = () => {
       fontSize: "15px",
       display: "inline-block",
       marginBottom: "5px",
-      color: "grey",
-      color: darkMode ? "white" : "black",
+      color: darkMode ? "white" : "grey",
     },
     mangaAuthor: {
       fontSize: "13px",
@@ -142,18 +152,16 @@ const Home = () => {
     },
   }));
 
-  const classes = useStyles();
-  const [mangasVolume, setMangasVolume] = useState([]);
-  const navigate = useNavigate();
-  const [userMangaVolume, setUserMangaVolume] = useState([]);
-  const [hoverIndex, setHoverIndex] = useState(null);
-  const [isErrorVisible, setIsErrorVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isAddedToLibraryPopupOpen, setIsAddedToLibraryPopupOpen] =
-    useState(false);
-
-  const isLoggedIn = () => localStorage.getItem("token");
-
+    const classes = useStyles();
+    const navigate = useNavigate();
+    const [mangasVolume, setMangasVolume] = useState<MangaVolume[]>([]);
+    const [userMangaVolume, setUserMangaVolume] = useState<MangaVolume[]>([]);
+    const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+    const [isErrorVisible, setIsErrorVisible] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isAddedToLibraryPopupOpen, setIsAddedToLibraryPopupOpen] = useState(false);
+  
+    const isLoggedIn = (): boolean => !!localStorage.getItem("token");
   useEffect(() => {
     if (isLoggedIn()) {
       const token = localStorage.getItem("token");
@@ -186,7 +194,7 @@ const Home = () => {
       });
   }, []);
 
-  const addToLibrary = (event, mangaVolumeId) => {
+  const addToLibrary = (event: React.MouseEvent<HTMLButtonElement>, mangaVolumeId: string) => {
     event.stopPropagation();
     if (!isLoggedIn()) {
       showErrorPopup("Vous devez être connecté");
@@ -203,22 +211,22 @@ const Home = () => {
 
     const token = localStorage.getItem("token");
     axios
-      .post(
-        "http://localhost:4000/userMangaVolume",
-        { mangaVolumeId },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
-      .then((response) => {
-        const addedMangaVolume = mangasVolume.find(
-          (mv) => mv.id === mangaVolumeId
-        );
+    .post(
+      "http://localhost:4000/userMangaVolume",
+      { mangaVolumeId },
+      { headers: { Authorization: `Bearer ${token}` } }
+    )
+    .then((response) => {
+      const addedMangaVolume = mangasVolume.find((mv) => mv.id === mangaVolumeId);
+      if (addedMangaVolume) {
         setUserMangaVolume([...userMangaVolume, addedMangaVolume]);
         setIsAddedToLibraryPopupOpen(true);
         setTimeout(() => {
           setIsAddedToLibraryPopupOpen(false);
         }, 3000);
-      })
-      .catch((error) => {
+      }
+    })
+    .catch((error) => {
         if (error.response && error.response.status === 400) {
           showErrorPopup("Manga déjà ajouté");
         } else {
@@ -227,7 +235,7 @@ const Home = () => {
       });
   };
 
-  const showErrorPopup = (message) => {
+  const showErrorPopup = (message: string) => {
     setErrorMessage(message);
     setIsErrorVisible(true);
 
@@ -236,28 +244,29 @@ const Home = () => {
       setErrorMessage("");
     }, 1500);
   };
+
   useEffect(() => {
     axios
-      .get("http://localhost:4000/mangaVolume")
+      .get<MangaVolume[]>("http://localhost:4000/mangaVolume")
       .then((response) => {
-        const sortedMangaVolumes = response.data.sort((a, b) => {
-          if (a.mangaId === b.mangaId) {
+        const sortedMangaVolumes = response.data.sort((a: MangaVolume, b: MangaVolume) => {
+          if (a.Manga.title === b.Manga.title) {
             const numA = parseInt(a.title.split(" ")[1]);
             const numB = parseInt(b.title.split(" ")[1]);
             return numB - numA;
           }
-          return a.mangaId - b.mangaId;
+          return a.Manga.title.localeCompare(b.Manga.title);
         });
-
-        const uniqueMangaVolumes = [];
-        let currentMangaId = null;
+  
+        const uniqueMangaVolumes: MangaVolume[] = [];
+        let currentMangaId: string | null = null;
         for (let mangaVolume of sortedMangaVolumes) {
-          if (mangaVolume.mangaId !== currentMangaId) {
+          if (mangaVolume.Manga.title !== currentMangaId) {
             uniqueMangaVolumes.push(mangaVolume);
-            currentMangaId = mangaVolume.mangaId;
+            currentMangaId = mangaVolume.Manga.title;
           }
         }
-
+  
         setMangasVolume(uniqueMangaVolumes);
       })
       .catch((error) => {
@@ -268,7 +277,6 @@ const Home = () => {
   return (
     <div className={classes.container}>
       <SearchBar />
-      {/* <MangaCarousel mangasVolume={mangasVolume} /> */}
       <div className={classes.grid}>
         {mangasVolume.map((mangaVolume, index) => (
           <div

@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -10,7 +9,8 @@ import {
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { makeStyles } from "@mui/styles";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import React, { ChangeEvent, useState, FormEvent } from "react";
 
 const useStyles = makeStyles({
   container: {
@@ -85,7 +85,7 @@ const Register = () => {
     navigate("/login");
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
@@ -93,7 +93,7 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     try {

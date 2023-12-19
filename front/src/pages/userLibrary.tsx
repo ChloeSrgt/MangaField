@@ -5,7 +5,21 @@ import { makeStyles } from "@mui/styles";
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchBar from "../components/searchBar";
-import Footer from "../components/footer";
+
+interface MangaVolume {
+  id: string;
+  title: string;
+  image: string;
+  Manga: {
+    title: string;
+    author: string;
+  };
+}
+
+interface UserMangaVolume {
+  id: string;
+  MangaVolume: MangaVolume;
+}
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -48,13 +62,13 @@ const useStyles = makeStyles(() => ({
       backgroundColor: "#067790 !important",
       color: "white !important",
     },
-    contentContainer: {
-      textAlign: "left",
-    },
     actionContainer: {
       display: "flex",
       justifyContent: "flex-end",
     },
+  },
+  contentContainer: {
+    textAlign: "left",
   },
   mangaVolumeCard: {
     position: "relative",
@@ -114,13 +128,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const UserLibrary = () => {
+const UserLibrary: React.FC = () => {
   const classes = useStyles();
-  const [userMangaVolume, setUserMangaVolume] = useState([]);
-  const [hoverIndex, setHoverIndex] = useState(null);
+  const [userMangaVolume, setUserMangaVolume] = useState<UserMangaVolume[]>([]);
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const navigate = useNavigate();
 
-  const handleCardClick = (mangaVolumeId) => {
+  const handleCardClick = (mangaVolumeId: string) => {
     navigate(`/mangaDetails/${mangaVolumeId}`);
   };
 
@@ -138,7 +152,7 @@ const UserLibrary = () => {
       });
   }, []);
 
-  const handleDeleteMangaVolume = (event, id) => {
+  const handleDeleteMangaVolume = (event: React.MouseEvent<HTMLButtonElement>, id: string) => {
     event.stopPropagation();
     const token = localStorage.getItem("token");
     axios

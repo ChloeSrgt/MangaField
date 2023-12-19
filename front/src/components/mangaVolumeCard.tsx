@@ -108,9 +108,30 @@ const useStyles = makeStyles(() => ({
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
     zIndex: "9999",
   },
+  contentContainer: { 
+    textAlign: "left",
+  },
 }));
 
-const MangaVolumeCard = ({ mangaVolume, onCardClick, actionButton }) => {
+interface MangaVolumeCardProps {
+  mangaVolume: {
+    id: number;
+    image: string;
+    title: string;
+    Manga: {
+      title: string;
+      author: string;
+    };
+  };
+  onCardClick: (id: number) => void;
+  actionButton: React.ReactNode;
+}
+
+const MangaVolumeCard: React.FC<MangaVolumeCardProps> = ({
+  mangaVolume,
+  onCardClick,
+  actionButton,
+}) => {
   const classes = useStyles();
 
   return (

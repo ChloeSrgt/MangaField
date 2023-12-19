@@ -1,6 +1,6 @@
 import { makeStyles } from "@mui/styles";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import SearchBar from "../components/searchBar";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -54,9 +54,18 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+interface ProfileData {
+  name: string;
+  email: string;
+  bio: string;
+  address: string;
+  userName: string;
+  profileImage: File | null;
+}
+
 const MyProfile = () => {
   const classes = useStyles();
-  const [profileData, setProfileData] = useState({
+  const [profileData, setProfileData] = useState<ProfileData>({
     name: "",
     email: "",
     bio: "",
@@ -64,16 +73,17 @@ const MyProfile = () => {
     userName: "",
     profileImage: null,
   });
-  const handleInputChange = (event) => {
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setProfileData({ ...profileData, [name]: value });
   };
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || null;
     setProfileData({ ...profileData, profileImage: file });
   };
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -85,7 +95,7 @@ const MyProfile = () => {
         setProfileData({
           name: response.data.name,
           email: response.data.email,
-          adress: response.data.adress,
+          address: response.data.address,
           bio: response.data.bio,
           userName: response.data.userName,
           profileImage: response.data.profileImage,
@@ -97,13 +107,13 @@ const MyProfile = () => {
     fetchData();
   }, []);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData();
     formData.append("name", profileData.name);
     formData.append("email", profileData.email);
-    formData.append("adress", profileData.adress);
+    formData.append("address", profileData.address);
     formData.append("userName", profileData.userName);
     formData.append("bio", profileData.bio);
 
@@ -122,6 +132,7 @@ const MyProfile = () => {
       console.error("Erreur lors de la mise à jour du profil", error);
     }
   };
+
   return (
     <div className={classes.container}>
       <SearchBar />
@@ -167,7 +178,12 @@ const MyProfile = () => {
             value={profileData.bio}
             onChange={handleInputChange}
           />
-          <input type="file" accept="image/*" onChange={handleFileChange} />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            hidden
+          />
           <Button
             className={classes.uploadButton}
             variant="contained"

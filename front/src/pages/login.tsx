@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Avatar, Button, CssBaseline, TextField, Link, Grid, Box, Typography, Container } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { makeStyles } from "@mui/styles";
-
 
 const useStyles = makeStyles({
   container: {
@@ -48,30 +47,29 @@ const useStyles = makeStyles({
   },
 });
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+const Login: React.FC = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const navigate = useNavigate();
   const classes = useStyles();
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       const response = await axios.post("http://localhost:4000/login", { email, password });
       localStorage.setItem("token", response.data);
       navigate("/home");
-    } catch (error) {
+    } catch (error: any) {
       setError(error.response ? error.response.data : "Erreur lors de la connexion");
     }
   };
-
   const handleRegister = () => {
     navigate("/Register");
   };
 
   return (
-    <Container component="main" maxWidth="m" className={classes.container}>
+    <Container component="main" maxWidth="md" className={classes.container}>
       <CssBaseline />
       <Grid container justifyContent="center" alignItems="center">
         <Box className={classes.box}>

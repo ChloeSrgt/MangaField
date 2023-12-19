@@ -8,7 +8,29 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import Footer from "../components/footer";
 import { DarkModeContext } from "../App";
 
-const AllMangas = () => {
+interface MangaDetails {
+  title: string;
+  status: string;
+  theme: string;
+  description: string;
+  author: string;
+}
+
+interface MangaVolume {
+  id: string;
+  title: string;
+  image: string;
+  Manga: { title: string };
+}
+
+interface Volume {
+  id: string;
+  title: string;
+  image: string;
+  Manga: { title: string };
+}
+
+const AllMangas: React.FC = () => {
   const { darkMode } = useContext(DarkModeContext);
   const useStyles = makeStyles(() => ({
     container: {
@@ -204,28 +226,27 @@ const AllMangas = () => {
     },
   }));
 
-  const { mangaId } = useParams();
+  const { mangaId } = useParams<{ mangaId: string }>();
   const classes = useStyles();
   const navigate = useNavigate();
-  const [mangaDetails, setMangaDetails] = useState(null);
-  const [mangaVolumes, setMangaVolumes] = useState([]);
-  const [hoverIndex, setHoverIndex] = useState(null);
-  const [userMangaVolumes, setUserMangaVolumes] = useState([]);
+  const [mangaDetails, setMangaDetails] = useState<MangaDetails | null>(null);
+  const [mangaVolumes, setMangaVolumes] = useState<MangaVolume[]>([]);
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const [userMangaVolumes, setUserMangaVolumes] = useState<MangaVolume[]>([]);
   const [isErrorVisible, setIsErrorVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [volumeCount, setVolumeCount] = useState(0);
-  const [isAddedToLibraryPopupOpen, setIsAddedToLibraryPopupOpen] =
-    useState(false);
+  const [isAddedToLibraryPopupOpen, setIsAddedToLibraryPopupOpen] = useState(false);
 
   const isLoggedIn = () => localStorage.getItem("token");
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/manga/${mangaId}`).then((response) => {
+    axios.get<MangaDetails>(`http://localhost:4000/manga/${mangaId}`).then((response) => {
       setMangaDetails(response.data);
     });
-
+  
     axios
-      .get(`http://localhost:4000/mangaVolume/${mangaId}/volumes`)
+      .get<Volume[]>(`http://localhost:4000/mangaVolume/${mangaId}/volumes`)
       .then((response) => {
         setMangaVolumes(response.data);
         const highestVolumeNumber = Math.max(
@@ -235,7 +256,7 @@ const AllMangas = () => {
       });
   }, [mangaId]);
 
-  const addToLibrary = (event, mangaVolumeId) => {
+  const addToLibrary = (event: React.MouseEvent<HTMLButtonElement>, mangaVolumeId: string) => {
     event.stopPropagation();
     if (!isLoggedIn()) {
       showErrorPopup("Vous devez être connecté");
@@ -274,7 +295,7 @@ const AllMangas = () => {
       });
   };
 
-  const showErrorPopup = (message) => {
+  const showErrorPopup = (message: string) => {
     setErrorMessage(message);
     setIsErrorVisible(true);
 

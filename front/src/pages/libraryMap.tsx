@@ -1,7 +1,7 @@
 import { makeStyles } from "@mui/styles";
 import React from "react";
-import SearchBar from "../components/searchBar";
-import planville from "../assets/planville.png";
+// import SearchBar from "../components/searchBar";
+// import planville from "../assets/planville.png";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -25,12 +25,10 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const LibraryMap = () => {
+const LibraryMap: React.FC = () => {
   const classes = useStyles();
   return (
-    <div className={classes.container}>
-      <SearchBar />
-      <img src={planville} alt="planville" className={classes.plan} />
+    <div className={classes.container}> coucou
     </div>
   );
 };
